@@ -6,6 +6,6 @@ main>section,
 header,
 footer {
   max-width: var(--section-max-width-1);
-  /* padding-inline: var(--padding-inline); */
+  padding-inline: var(--padding-inline);
   /* border: 1px solid red; */
 }

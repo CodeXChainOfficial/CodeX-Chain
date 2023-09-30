@@ -1,5 +1,6 @@
 :root {
   --section-max-width-1: 1700px;
+  --padding-inline: 80px;
 
   /* Colors */
   --black: #000;
