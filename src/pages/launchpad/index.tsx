@@ -4,7 +4,9 @@ import { Outlet } from "react-router-dom";
 export default function Launchpad() {
   return (
     <main>
-      <Title>Launchpad</Title>
+      <section>
+        <Title>Launchpad</Title>
+      </section>
 
       <Outlet />
     </main>

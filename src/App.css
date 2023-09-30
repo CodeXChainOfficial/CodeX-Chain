@@ -9,3 +9,7 @@ footer {
   padding-inline: var(--padding-inline);
   /* border: 1px solid red; */
 }
+
+header {
+  margin-block-end: 20px;
+}
