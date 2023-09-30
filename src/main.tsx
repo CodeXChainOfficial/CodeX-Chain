@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import Error from "./pages/error";
-import Home from "./pages/home";
+// import Home from "./pages/home";
 import Launchpad from "./pages/launchpad";
 
 const router = createBrowserRouter([
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       {
         errorElement: <Error />,
         children: [
-          { index: true, element: <Home /> },
+          { index: true, element: <Launchpad /> },
           { path: "/launchpad", element: <Launchpad /> },
         ],
       },

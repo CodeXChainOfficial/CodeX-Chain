@@ -10,7 +10,11 @@ export default defineConfig(({ mode }) => {
     define: {
       "process.env": env,
     },
-    plugins: [react({ jsxImportSource: "@emotion/react" })],
+    plugins: [
+      react({
+        jsxImportSource: "@emotion/react",
+      }),
+    ],
     resolve: {
       alias: [{ find: "@", replacement: "/src" }],
     },
