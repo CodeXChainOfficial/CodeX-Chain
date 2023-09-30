@@ -2,11 +2,12 @@
 // import viteLogo from '/vite.svg'
 import { Outlet } from "react-router-dom";
 import "./App.css";
+import Header from "./widgets/components/Header";
 
 function App() {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
 
       <Outlet />
 
