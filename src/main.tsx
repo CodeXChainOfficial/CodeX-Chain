@@ -6,7 +6,7 @@ import App from "./App";
 import Error from "./pages/error";
 import Home from "./pages/home";
 import Launchpad from "./pages/launchpad";
-import LaunchpadForm from "./pages/launchpad/pages/form";
+import CreateLaunchpad from "./pages/launchpad/pages/create";
 import LaunchpadResult from "./pages/launchpad/pages/result";
 
 const router = createBrowserRouter(
@@ -16,9 +16,9 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
 
         <Route path="launchpad/*" element={<Launchpad />}>
-          <Route index element={<LaunchpadForm />} />
+          <Route index element={<CreateLaunchpad />} />
           <Route path="result" element={<LaunchpadResult />} />
-          <Route path="*" element={<LaunchpadForm />} />
+          <Route path="*" element={<CreateLaunchpad />} />
         </Route>
       </Route>
     </Route>

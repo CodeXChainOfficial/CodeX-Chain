@@ -3,18 +3,22 @@ import { Outlet } from "react-router-dom";
 
 export default function Launchpad() {
   return (
-    <main>
+    <Main>
       <section>
-        <Title>Launchpad</Title>
+        <Title>LaunchPad</Title>
       </section>
 
       <Outlet />
-    </main>
+    </Main>
   );
 }
 
+const Main = styled.main`
+  display: grid;
+  gap: 20px;
+`;
+
 const Title = styled.h2`
-  font-family: Raleway;
   font-size: 48px;
   font-weight: 600;
   line-height: 67.2px;

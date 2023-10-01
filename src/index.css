@@ -4,7 +4,17 @@
 
   /* Colors */
   --black: #000;
+  --black2: #0a0a0a;
+
+  --blue: #009dff;
+
   --white: #fff;
+  --contrastWhite: rgba(255, 255, 255, 0.9);
+
+  --contrast-white-30: rgba(255, 255, 255, 0.3);
+
+  --red: #F97066;
+  --gradient1: linear-gradient(261deg, #089df1 11.69%, #082df1 59.3%, #08abf1 104.96%);
 
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -38,6 +48,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  padding-block-end: 40px;
 }
 
 

@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-main>section,
+main,
 header,
 footer {
   max-width: var(--section-max-width-1);
