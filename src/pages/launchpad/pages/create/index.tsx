@@ -5,19 +5,32 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "./components/FormInput";
 import FormTextarea from "./components/FormTextarea";
 import ImageInput from "./components/ImageInput";
+import RadioInput from "./components/RadioInput";
 
 const Schema = z.object({
-  name: z.string().min(3, "Name must contain at least 3 characters"),
-  logo: z.object({ path: z.string(), file: z.object({}) }),
+  // name: z.string().min(3, "Name must contain at least 3 characters"),
+  name: z.string().optional(),
+  logo: z.string().optional(), // will be set to the path of the file.
   description: z.string().optional(),
   wallet: z.string().optional(),
+  launchPadType: z.string().optional(),
+  incubationNeeded: z.boolean().optional(),
+  milestoneNeeded: z.boolean().optional(),
 });
 
 type FormData = z.infer<typeof Schema>;
 
 export default function CreateLaunchpad() {
   const { control, handleSubmit } = useForm<FormData>({
-    defaultValues: { name: "", wallet: "", description: "", logo: { path: "", file: undefined } },
+    defaultValues: {
+      name: "",
+      wallet: "",
+      description: "",
+      logo: "",
+      launchPadType: "",
+      incubationNeeded: false,
+      milestoneNeeded: false,
+    },
     resolver: zodResolver(Schema),
   });
 
@@ -30,7 +43,7 @@ export default function CreateLaunchpad() {
       <Section>
         <Title>LaunchPad Configurations</Title>
 
-        <FormInput name="name" control={control} placeholder="Name" required />
+        <FormInput name="name" control={control} placeholder="Name" />
         <ImageInput
           name="logo"
           control={control}
@@ -42,6 +55,34 @@ export default function CreateLaunchpad() {
 
       <Section>
         <Title>Select LaunchPad Settings</Title>
+
+        <RadioInput
+          name="launchPadType"
+          label="Select LaunchPad Type"
+          control={control}
+          radio={[
+            { value: "centralized", label: "Centralized" },
+            { value: "decentralized", label: "Decentralized" },
+          ]}
+        />
+        <RadioInput
+          name="incubationNeeded"
+          label="Incubation Needed?"
+          control={control}
+          radio={[
+            { value: true, label: "Yes" },
+            { value: false, label: "No" },
+          ]}
+        />
+        <RadioInput
+          name="milestoneNeeded"
+          label="Milestone Needed?"
+          control={control}
+          radio={[
+            { value: true, label: "Yes" },
+            { value: false, label: "No" },
+          ]}
+        />
       </Section>
 
       <Submit type="submit">Next</Submit>
