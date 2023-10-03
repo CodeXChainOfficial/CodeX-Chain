@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import { useController } from "react-hook-form";
-import { InputProps } from "../types/form";
+import { InputProps } from "../../types/form";
 import { media } from "@/shared/styles/media";
 import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import Modal from "@mui/material/Modal";
 import { useState } from "react";
+import ChainItem from "./ChainItem";
 
 const ChainSelector = ({ name, control, rules, required }: InputProps) => {
   const { field, fieldState } = useController({
@@ -14,50 +14,23 @@ const ChainSelector = ({ name, control, rules, required }: InputProps) => {
     rules: { required, ...rules },
   });
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const [open, setOpen] = useState(false);
 
-  const handleSelect = () => {};
+  const selected = "codex";
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const setBlockchain = (blockchain: string, net: "mainnet" | "testnet") => {};
 
-  const list = ["something", "another", "anotheddkdk"];
+  const handleOpen = () => setOpen(true);
+
+  const handleClose = () => setOpen(false);
 
   const className = fieldState.isTouched && fieldState.error ? "error" : "";
 
   return (
     <Wrapper>
-      <StyledButton
-        {...field}
-        className={className}
-        aria-controls={open ? "basic-menu-1696310813263" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
+      <StyledButton {...field} className={className} onClick={handleOpen}>
         Select Chain
       </StyledButton>
-
-      <Menu
-        id="basic-menu-1696310813263"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        {list.map((item, idx) => (
-          <MenuItem key={idx} onClick={handleClose}>
-            {item}
-          </MenuItem>
-        ))}
-      </Menu>
     </Wrapper>
   );
 };
@@ -95,3 +68,38 @@ const StyledButton = styled(Button)`
 `;
 
 export default ChainSelector;
+
+const mainnet = [
+  "codex",
+  "tron",
+  "ethereum",
+  "polygon",
+  "arbritrum nova",
+  "fantom opera",
+  "kava",
+  "moonbeam",
+  "moonriver",
+  "optimism",
+  "arbritrum",
+  "avalanche",
+  "BSC",
+  "cello",
+  "cronos",
+  "fuse",
+  "gnosis",
+  "harmony",
+  "metis",
+  "telos EVM",
+];
+
+const testnet = [
+  "codex",
+  "tron",
+  "BSC",
+  "fantom opera",
+  "moonbeam",
+  "avalanche",
+  "cronos",
+  "ethereum",
+  "arbritrum nova",
+];
