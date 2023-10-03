@@ -5,11 +5,12 @@ type Props = {
   blockchain: string;
   isSelected?: boolean;
   net?: "mainnet" | "testnet";
+  onSelect: () => void;
 };
 
-const ChainItem = ({ blockchain, isSelected, net }: Props) => {
+const ChainItem = ({ blockchain, isSelected, net, onSelect }: Props) => {
   return (
-    <Item className={isSelected ? "selected" : ""}>
+    <Item className={isSelected ? "selected" : ""} onClick={onSelect}>
       <ImgDiv>
         <img src={`/blockchains/${blockchain.toLowerCase()}.png`} alt="" />
       </ImgDiv>

@@ -20,14 +20,17 @@ const Schema = z.object({
   launchPadType: z.string().optional(),
   incubationNeeded: z.boolean().optional(),
   milestoneNeeded: z.boolean().optional(),
-  blockchain: z.string().optional(),
+  blockchain: z.object({
+    name: z.string(),
+    net: z.string(),
+  }),
   generateDashboard: z.boolean().optional(),
 });
 
 type FormData = z.infer<typeof Schema>;
 
 export default function CreateLaunchpad() {
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, getValues } = useForm<FormData>({
     defaultValues: {
       name: "",
       wallet: "",
@@ -36,7 +39,6 @@ export default function CreateLaunchpad() {
       launchPadType: "",
       incubationNeeded: false,
       milestoneNeeded: false,
-      blockchain: "",
       generateDashboard: false,
     },
     resolver: zodResolver(Schema),
@@ -103,7 +105,7 @@ export default function CreateLaunchpad() {
           ]}
         />
 
-        <SelectedChains chains={["Codex"]} />
+        <SelectedChains />
       </Section>
 
       <Submit type="submit">Next</Submit>
