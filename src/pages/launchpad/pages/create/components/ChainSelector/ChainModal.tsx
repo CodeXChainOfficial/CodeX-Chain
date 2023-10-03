@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { media } from "@/shared/styles/media";
 import ChainItem from "./ChainItem";
 import { Blockchain } from "../../types";
 
@@ -61,12 +62,17 @@ const GroupContainer = styled.div`
   max-height: 650px;
   display: grid;
   gap: 20px;
+  padding-inline-end: 10px;
 `;
 
 const Group = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+
+  ${media.sm} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Title2 = styled.h4`
