@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { useController } from "react-hook-form";
 import { FieldError, FieldLabel, FormInputStyle } from "../styles/form";
 import { InputProps } from "../types/form";
+import { media } from "@/shared/styles/media";
 
 type Selected = 0 | 1 | -1;
 
@@ -17,8 +18,8 @@ const RadioInput = ({ placeholder, label, radio, required, ...rest }: InputProps
     let value = radio[index as number].value;
 
     if (index === selected && !required) {
-      value = typeof value === "boolean" ? false : "";
       index = -1;
+      value = typeof value === "boolean" ? false : "";
     }
 
     setSelected(index);
@@ -56,15 +57,20 @@ const Wrapper = styled.div`
 
 const Group = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  align-items: center;
+
+  & > * {
+    flex-basis: 48%;
+    flex-grow: 1;
+  }
 `;
 
 const Item = styled.button`
   ${FormInputStyle}
-  flex-grow:1;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Input = styled.input`

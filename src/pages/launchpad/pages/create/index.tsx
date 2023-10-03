@@ -6,6 +6,7 @@ import FormInput from "./components/FormInput";
 import FormTextarea from "./components/FormTextarea";
 import ImageInput from "./components/ImageInput";
 import RadioInput from "./components/RadioInput";
+import ChainSelector from "./components/ChainSelector";
 
 const Schema = z.object({
   // name: z.string().min(3, "Name must contain at least 3 characters"),
@@ -16,6 +17,8 @@ const Schema = z.object({
   launchPadType: z.string().optional(),
   incubationNeeded: z.boolean().optional(),
   milestoneNeeded: z.boolean().optional(),
+  deployType: z.string().optional(),
+  blockchain: z.string().optional(),
 });
 
 type FormData = z.infer<typeof Schema>;
@@ -30,6 +33,7 @@ export default function CreateLaunchpad() {
       launchPadType: "",
       incubationNeeded: false,
       milestoneNeeded: false,
+      deployType: "",
     },
     resolver: zodResolver(Schema),
   });
@@ -83,6 +87,17 @@ export default function CreateLaunchpad() {
             { value: false, label: "No" },
           ]}
         />
+        <RadioInput
+          name="deployType"
+          label="Deploy Option"
+          control={control}
+          radio={[
+            { value: "single-chain", label: "Single-chain" },
+            { value: "multi-chain", label: "Multi-chain" },
+          ]}
+        />
+
+        <ChainSelector name="blockchain" control={control} />
       </Section>
 
       <Submit type="submit">Next</Submit>
