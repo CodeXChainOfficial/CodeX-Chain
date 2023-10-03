@@ -27,8 +27,12 @@ const Wrapper = styled.div`
 
 const Textarea = styled.textarea`
   ${FormInputStyle}
+
   min-height: 150px;
   min-width: 100%;
+  max-height: 300px;
+  max-width: 1116px;
+  transition: width, height 0ms;
 `;
 
 export default FormTextarea;

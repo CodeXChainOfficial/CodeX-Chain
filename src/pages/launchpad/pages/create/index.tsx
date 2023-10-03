@@ -9,6 +9,7 @@ import RadioInput from "./components/RadioInput";
 import ChainSelector from "./components/ChainSelector";
 import { media } from "@/shared/styles/media";
 import { Button } from "@mui/material";
+import SelectedChains from "./components/SelectedChains";
 
 const Schema = z.object({
   // name: z.string().min(3, "Name must contain at least 3 characters"),
@@ -19,14 +20,17 @@ const Schema = z.object({
   launchPadType: z.string().optional(),
   incubationNeeded: z.boolean().optional(),
   milestoneNeeded: z.boolean().optional(),
-  deployType: z.string().optional(),
-  blockchain: z.string().optional(),
+  blockchain: z.object({
+    name: z.string(),
+    net: z.string(),
+  }),
+  generateDashboard: z.boolean().optional(),
 });
 
 type FormData = z.infer<typeof Schema>;
 
 export default function CreateLaunchpad() {
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, getValues } = useForm<FormData>({
     defaultValues: {
       name: "",
       wallet: "",
@@ -35,8 +39,7 @@ export default function CreateLaunchpad() {
       launchPadType: "",
       incubationNeeded: false,
       milestoneNeeded: false,
-      deployType: "",
-      blockchain: "",
+      generateDashboard: false,
     },
     resolver: zodResolver(Schema),
   });
@@ -63,6 +66,8 @@ export default function CreateLaunchpad() {
       <Section>
         <Title>Select LaunchPad Settings</Title>
 
+        <ChainSelector name="blockchain" control={control} />
+
         <RadioInput
           name="launchPadType"
           label="Select LaunchPad Type"
@@ -82,6 +87,15 @@ export default function CreateLaunchpad() {
           ]}
         />
         <RadioInput
+          name="generateDashboard"
+          label="Generate Dashboard?"
+          control={control}
+          radio={[
+            { value: true, label: "Yes" },
+            { value: false, label: "No" },
+          ]}
+        />
+        <RadioInput
           name="milestoneNeeded"
           label="Milestone Needed?"
           control={control}
@@ -90,17 +104,8 @@ export default function CreateLaunchpad() {
             { value: false, label: "No" },
           ]}
         />
-        <RadioInput
-          name="deployType"
-          label="Deploy Option"
-          control={control}
-          radio={[
-            { value: "single-chain", label: "Single-chain" },
-            { value: "multi-chain", label: "Multi-chain" },
-          ]}
-        />
 
-        <ChainSelector name="blockchain" control={control} />
+        <SelectedChains />
       </Section>
 
       <Submit type="submit">Next</Submit>
