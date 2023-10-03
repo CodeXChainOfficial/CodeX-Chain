@@ -21,19 +21,16 @@ const ChainSelector = ({ name, control, rules, required }: InputProps) => {
       <Button {...field} className={className} onClick={handleClick}>
         Select Chain
       </Button>
-      <Empty />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 30px 1fr;
 
-  & > * {
-    flex-basis: 48%;
-    flex-grow: 1;
+  ${media.sm} {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -53,12 +50,6 @@ const Button = styled.button`
 
   &.error {
     color: var(--red);
-  }
-`;
-
-const Empty = styled.div`
-  ${media.sm} {
-    display: none;
   }
 `;
 

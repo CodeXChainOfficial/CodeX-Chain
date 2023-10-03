@@ -7,6 +7,7 @@ import FormTextarea from "./components/FormTextarea";
 import ImageInput from "./components/ImageInput";
 import RadioInput from "./components/RadioInput";
 import ChainSelector from "./components/ChainSelector";
+import { media } from "@/shared/styles/media";
 
 const Schema = z.object({
   // name: z.string().min(3, "Name must contain at least 3 characters"),
@@ -34,6 +35,7 @@ export default function CreateLaunchpad() {
       incubationNeeded: false,
       milestoneNeeded: false,
       deployType: "",
+      blockchain: "",
     },
     resolver: zodResolver(Schema),
   });
@@ -117,6 +119,10 @@ const Section = styled.section`
   gap: 15px;
   padding: 30px 32px;
   background: var(--black2);
+
+  ${media.sm} {
+    padding-inline: 10px;
+  }
 `;
 
 const Title = styled.h3`

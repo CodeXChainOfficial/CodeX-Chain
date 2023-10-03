@@ -56,13 +56,12 @@ const Wrapper = styled.div`
 `;
 
 const Group = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
 
-  & > * {
-    flex-basis: 48%;
-    flex-grow: 1;
+  ${media.sm} {
+    grid-template-columns: 1fr;
   }
 `;
 
