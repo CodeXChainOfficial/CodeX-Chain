@@ -13,21 +13,25 @@ const ImageInput = ({ name, control, rules, placeholder, label, required }: Inpu
     rules: { required, ...rules },
   });
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
     const file = e.target.files[0];
 
     setPreview(URL.createObjectURL(file));
 
-    field.onChange({ ...e, target: { ...e.target, value: { path: e.target.value, file } } });
+    // const value = file.toString();
+
+    field.onChange(e);
   };
 
   return (
     <Wrapper>
       <FieldLabel className={required ? "required" : ""}>{label || name}</FieldLabel>
       <Placeholder>{placeholder}</Placeholder>
-      <Input {...field} value={field.value.path} onChange={onChange} type="file" accept="image/*" />
-      {fieldState.isTouched && fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
+      <Input {...field} value="" onChange={onChange} type="file" accept="image/*" />
       {preview && <Img key={preview} src={preview} alt="" />}
+      {fieldState.isTouched && fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
     </Wrapper>
   );
 };

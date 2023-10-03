@@ -5,19 +5,39 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "./components/FormInput";
 import FormTextarea from "./components/FormTextarea";
 import ImageInput from "./components/ImageInput";
+import RadioInput from "./components/RadioInput";
+import ChainSelector from "./components/ChainSelector";
+import { media } from "@/shared/styles/media";
+import { Button } from "@mui/material";
 
 const Schema = z.object({
-  name: z.string().min(3, "Name must contain at least 3 characters"),
-  logo: z.object({ path: z.string(), file: z.object({}) }),
+  // name: z.string().min(3, "Name must contain at least 3 characters"),
+  name: z.string().optional(),
+  logo: z.string().optional(), // will be set to the path of the file.
   description: z.string().optional(),
   wallet: z.string().optional(),
+  launchPadType: z.string().optional(),
+  incubationNeeded: z.boolean().optional(),
+  milestoneNeeded: z.boolean().optional(),
+  deployType: z.string().optional(),
+  blockchain: z.string().optional(),
 });
 
 type FormData = z.infer<typeof Schema>;
 
 export default function CreateLaunchpad() {
   const { control, handleSubmit } = useForm<FormData>({
-    defaultValues: { name: "", wallet: "", description: "", logo: { path: "", file: undefined } },
+    defaultValues: {
+      name: "",
+      wallet: "",
+      description: "",
+      logo: "",
+      launchPadType: "",
+      incubationNeeded: false,
+      milestoneNeeded: false,
+      deployType: "",
+      blockchain: "",
+    },
     resolver: zodResolver(Schema),
   });
 
@@ -30,7 +50,7 @@ export default function CreateLaunchpad() {
       <Section>
         <Title>LaunchPad Configurations</Title>
 
-        <FormInput name="name" control={control} placeholder="Name" required />
+        <FormInput name="name" control={control} placeholder="Name" />
         <ImageInput
           name="logo"
           control={control}
@@ -42,6 +62,45 @@ export default function CreateLaunchpad() {
 
       <Section>
         <Title>Select LaunchPad Settings</Title>
+
+        <RadioInput
+          name="launchPadType"
+          label="Select LaunchPad Type"
+          control={control}
+          radio={[
+            { value: "centralized", label: "Centralized" },
+            { value: "decentralized", label: "Decentralized" },
+          ]}
+        />
+        <RadioInput
+          name="incubationNeeded"
+          label="Incubation Needed?"
+          control={control}
+          radio={[
+            { value: true, label: "Yes" },
+            { value: false, label: "No" },
+          ]}
+        />
+        <RadioInput
+          name="milestoneNeeded"
+          label="Milestone Needed?"
+          control={control}
+          radio={[
+            { value: true, label: "Yes" },
+            { value: false, label: "No" },
+          ]}
+        />
+        <RadioInput
+          name="deployType"
+          label="Deploy Option"
+          control={control}
+          radio={[
+            { value: "single-chain", label: "Single-chain" },
+            { value: "multi-chain", label: "Multi-chain" },
+          ]}
+        />
+
+        <ChainSelector name="blockchain" control={control} />
       </Section>
 
       <Submit type="submit">Next</Submit>
@@ -61,6 +120,10 @@ const Section = styled.section`
   gap: 15px;
   padding: 30px 32px;
   background: var(--black2);
+
+  ${media.sm} {
+    padding-inline: 10px;
+  }
 `;
 
 const Title = styled.h3`
@@ -73,7 +136,7 @@ const Title = styled.h3`
   margin-block-end: 10px;
 `;
 
-const Submit = styled.button`
+const Submit = styled(Button)`
   color: var(--white);
   font-size: 16px;
   font-weight: 600;

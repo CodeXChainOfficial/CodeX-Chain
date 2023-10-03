@@ -17,10 +17,10 @@ const HeaderElement = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  backdrop-filter: blur(8.5px);
   transition: 0.4s ease-in-out;
-  /* perspective: 800px; */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /* backdrop-filter: blur(8.5px); */
+  background-color: var(--black);
 
   & > * {
     /* border: 1px solid white; */
