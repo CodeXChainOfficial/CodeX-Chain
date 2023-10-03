@@ -25,6 +25,7 @@ const Schema = z.object({
     net: z.string(),
   }),
   generateDashboard: z.boolean().optional(),
+  currency: z.string().optional(),
 });
 
 type FormData = z.infer<typeof Schema>;
@@ -40,6 +41,7 @@ export default function CreateLaunchpad() {
       incubationNeeded: false,
       milestoneNeeded: false,
       generateDashboard: false,
+      currency: "",
     },
     resolver: zodResolver(Schema),
   });
@@ -104,6 +106,15 @@ export default function CreateLaunchpad() {
             { value: false, label: "No" },
           ]}
         />
+        <RadioInput
+          name="currency"
+          label="Choose Currency"
+          control={control}
+          radio={[
+            { value: "usdt", label: "USDT" },
+            { value: "usdc", label: "USDC" },
+          ]}
+        />
 
         <SelectedChains />
       </Section>
@@ -122,7 +133,7 @@ const Form = styled.form`
 const Section = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 30px;
   padding: 30px 32px;
   background: var(--black2);
 
