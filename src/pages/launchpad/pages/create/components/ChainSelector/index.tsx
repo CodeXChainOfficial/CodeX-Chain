@@ -8,20 +8,13 @@ import Modal from "@mui/material/Modal";
 import ChainModal from "./ChainModal";
 import { FieldError } from "../../styles/form";
 import { Blockchain } from "../../types";
-import useSelectedChain from "../../hooks/useSelectedChain";
 
 const ChainSelector = ({ name, control, required }: InputProps) => {
-  const { setBlockchain } = useSelectedChain();
-
-  const { field, fieldState } = useController({
-    name,
-    control,
-    rules: { required },
-  });
+  const { field, fieldState } = useController({ name, control, rules: { required } });
 
   const [open, setOpen] = useState(false);
 
-  const value = field.value ?? ({ name: "", net: "" } as Blockchain);
+  const value = field.value ?? { name: "", net: "" };
 
   const handleOpen = () => setOpen(true);
 
@@ -29,7 +22,6 @@ const ChainSelector = ({ name, control, required }: InputProps) => {
 
   const handleSelect = (blockchain: Blockchain) => {
     field.onChange({ target: { value: blockchain } });
-    setBlockchain(blockchain);
     handleClose();
   };
 

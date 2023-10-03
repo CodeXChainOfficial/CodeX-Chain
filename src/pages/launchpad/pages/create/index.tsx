@@ -28,10 +28,10 @@ const Schema = z.object({
   currency: z.string().optional(),
 });
 
-type FormData = z.infer<typeof Schema>;
+export type LaunchPadFormData = z.infer<typeof Schema>;
 
 export default function CreateLaunchpad() {
-  const { control, handleSubmit, getValues } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<LaunchPadFormData>({
     defaultValues: {
       name: "",
       wallet: "",
@@ -46,7 +46,7 @@ export default function CreateLaunchpad() {
     resolver: zodResolver(Schema),
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: LaunchPadFormData) => {
     console.log(data);
   };
 
@@ -116,7 +116,7 @@ export default function CreateLaunchpad() {
           ]}
         />
 
-        <SelectedChains />
+        <SelectedChains control={control} />
       </Section>
 
       <Submit type="submit">Next</Submit>
