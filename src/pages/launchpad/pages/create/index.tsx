@@ -8,6 +8,7 @@ import ImageInput from "./components/ImageInput";
 import RadioInput from "./components/RadioInput";
 import ChainSelector from "./components/ChainSelector";
 import { media } from "@/shared/styles/media";
+import { Button } from "@mui/material";
 
 const Schema = z.object({
   // name: z.string().min(3, "Name must contain at least 3 characters"),
@@ -135,7 +136,7 @@ const Title = styled.h3`
   margin-block-end: 10px;
 `;
 
-const Submit = styled.button`
+const Submit = styled(Button)`
   color: var(--white);
   font-size: 16px;
   font-weight: 600;
