@@ -11,7 +11,7 @@ import useWatchLaunchPadType from "../hooks/useWatchLaunchPadType";
 const WalletList = ({ control }: Pick<InputProps, "control">) => {
   const [count, setCount] = useState(1);
 
-  const launchpadType = useWatchLaunchPadType(control);
+  const launchpadType = useWatchLaunchPadType({ control });
 
   const { field } = useController<LaunchPadFormData, "wallets">({
     name: "wallets",

@@ -11,6 +11,7 @@ import { media } from "@/shared/styles/media";
 import { Button } from "@mui/material";
 import SelectedChains from "./components/SelectedChains";
 import WalletList from "./components/WalletList";
+import WalletVotingPower from "./components/WalletVotingPower";
 
 const Schema = z.object({
   // name: z.string().min(3, "Name must contain at least 3 characters"),
@@ -85,6 +86,8 @@ export default function CreateLaunchpad() {
         />
 
         <WalletList control={control} />
+
+        <WalletVotingPower control={control} />
 
         <RadioInput
           name="incubationNeeded"
