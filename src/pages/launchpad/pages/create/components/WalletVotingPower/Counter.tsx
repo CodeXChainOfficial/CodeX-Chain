@@ -1,14 +1,36 @@
 import styled from "@emotion/styled";
 import Button from "@mui/material/Button";
 
-const VotingCounter = () => {
+type Props = {
+  onIncrement: () => void;
+  onDecrement: () => void;
+  value: number;
+  maxValue: number;
+  minValue: number;
+};
+
+const VotingCounter = ({ value, minValue, maxValue, onIncrement, onDecrement }: Props) => {
+  const disableDecrement = value <= minValue;
+  const disableIncrement = value >= maxValue;
+
+  const raiseDecrement = () => {
+    if (!disableDecrement) onDecrement();
+  };
+  const raiseIncrement = () => {
+    if (!disableIncrement) onIncrement();
+  };
+
   return (
     <Wrapper>
-      <StyledButton>-</StyledButton>
+      <StyledButton onClick={raiseDecrement} className={disableDecrement ? "disabled" : ""}>
+        -
+      </StyledButton>
 
-      <Value>1</Value>
+      <Value>{value}</Value>
 
-      <StyledButton>+</StyledButton>
+      <StyledButton onClick={raiseIncrement} className={disableIncrement ? "disabled" : ""}>
+        +
+      </StyledButton>
     </Wrapper>
   );
 };

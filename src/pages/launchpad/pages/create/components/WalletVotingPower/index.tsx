@@ -1,26 +1,49 @@
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import { useWatch } from "react-hook-form";
 import { FieldLabel } from "../../styles/form";
 import { InputProps } from "../../types/form";
 import useWatchLaunchPadType from "../../hooks/useWatchLaunchPadType";
-import { useWatch } from "react-hook-form";
 import { LaunchPadFormData } from "../..";
 import VotingCounter from "./Counter";
 import VotingProgress from "./Progress";
 
 const WalletVotingPower = ({ control }: Pick<InputProps, "control">) => {
-  const launchpadType = useWatchLaunchPadType({ control });
-
   const wallets = useWatchWallets({ control });
 
-  // if (launchpadType !== "decentralized" || !wallets.length) return <></>;
+  const length = wallets.length;
+
+  const [votingPower, setVotingPower] = useState(1);
+
+  const launchpadType = useWatchLaunchPadType({ control });
+
+  useEffect(() => {
+    setVotingPower(length);
+  }, [length]);
+
+  if (launchpadType !== "decentralized" || !wallets.length) return <></>;
+
+  const handleIncrement = () => {
+    setVotingPower((prev) => ++prev);
+  };
+
+  const handleDecrement = () => {
+    setVotingPower((prev) => --prev);
+  };
 
   return (
     <Wrapper>
       <FieldLabel>Wallet Voting Power</FieldLabel>
 
       <Group>
-        <VotingCounter />
-        <VotingProgress value={50} max={100} />
+        <VotingCounter
+          value={votingPower}
+          minValue={Math.round(length / 2)}
+          maxValue={length}
+          onDecrement={handleDecrement}
+          onIncrement={handleIncrement}
+        />
+        <VotingProgress value={votingPower} max={length} />
       </Group>
     </Wrapper>
   );
