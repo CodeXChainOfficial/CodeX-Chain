@@ -38,8 +38,8 @@ const ChainSelector = ({ name, control, required }: InputProps) => {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        // aria-labelledby="modal-modal-title"
+        // aria-describedby="modal-modal-description"
       >
         <ModalBox>
           <ChainModal
@@ -104,10 +104,6 @@ const StyledButton = styled(Button)`
   padding: 8px 32px;
   border: 1px solid transparent;
   cursor: pointer;
-
-  &.error {
-    color: var(--red);
-  }
 
   &:hover {
     background-color: var(--blue);

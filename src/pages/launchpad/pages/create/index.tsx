@@ -10,6 +10,7 @@ import ChainSelector from "./components/ChainSelector";
 import { media } from "@/shared/styles/media";
 import { Button } from "@mui/material";
 import SelectedChains from "./components/SelectedChains";
+import WalletList from "./components/WalletList";
 
 const Schema = z.object({
   // name: z.string().min(3, "Name must contain at least 3 characters"),
@@ -17,6 +18,7 @@ const Schema = z.object({
   logo: z.string().optional(), // will be set to the path of the file.
   description: z.string().optional(),
   wallet: z.string().optional(),
+  wallets: z.array(z.string()),
   launchPadType: z.string().optional(),
   incubationNeeded: z.boolean().optional(),
   milestoneNeeded: z.boolean().optional(),
@@ -42,6 +44,7 @@ export default function CreateLaunchpad() {
       milestoneNeeded: false,
       generateDashboard: false,
       currency: "",
+      wallets: [],
     },
     resolver: zodResolver(Schema),
   });
@@ -79,6 +82,9 @@ export default function CreateLaunchpad() {
             { value: "decentralized", label: "Decentralized" },
           ]}
         />
+
+        <WalletList name="wallets" control={control} />
+
         <RadioInput
           name="incubationNeeded"
           label="Incubation Needed?"
