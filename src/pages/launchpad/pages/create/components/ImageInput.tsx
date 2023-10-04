@@ -57,6 +57,7 @@ const Img = styled.img`
   bottom: 0;
   width: var(--img-width);
   height: var(--img-height);
+  object-fit: contain;
   border-radius: 8px;
   animation: fade-img 1s ease-in-out forwards;
 
@@ -74,9 +75,9 @@ const Input = styled.input`
   ${FormInputStyle}
 
   position: relative;
-
   width: var(--img-width);
   height: var(--img-height);
+  cursor: pointer;
 
   &::-webkit-file-upload-button {
     visibility: hidden;

@@ -10,6 +10,8 @@ import ChainSelector from "./components/ChainSelector";
 import { media } from "@/shared/styles/media";
 import { Button } from "@mui/material";
 import SelectedChains from "./components/SelectedChains";
+import WalletList from "./components/WalletList";
+import WalletVotingPower from "./components/WalletVotingPower";
 
 const Schema = z.object({
   // name: z.string().min(3, "Name must contain at least 3 characters"),
@@ -17,20 +19,23 @@ const Schema = z.object({
   logo: z.string().optional(), // will be set to the path of the file.
   description: z.string().optional(),
   wallet: z.string().optional(),
-  launchPadType: z.string().optional(),
+  wallets: z.array(z.string()),
+  // launchPadType: z.string().optional(),
+  launchPadType: z.union([z.literal("centralized"), z.literal("decentralized"), z.literal("")]),
   incubationNeeded: z.boolean().optional(),
   milestoneNeeded: z.boolean().optional(),
   blockchain: z.object({
     name: z.string(),
-    net: z.string(),
+    net: z.union([z.literal("mainnet"), z.literal("testnet"), z.literal("")]),
   }),
   generateDashboard: z.boolean().optional(),
+  currency: z.string().optional(),
 });
 
-type FormData = z.infer<typeof Schema>;
+export type LaunchPadFormData = z.infer<typeof Schema>;
 
 export default function CreateLaunchpad() {
-  const { control, handleSubmit, getValues } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<LaunchPadFormData>({
     defaultValues: {
       name: "",
       wallet: "",
@@ -40,11 +45,13 @@ export default function CreateLaunchpad() {
       incubationNeeded: false,
       milestoneNeeded: false,
       generateDashboard: false,
+      currency: "",
+      wallets: [],
     },
     resolver: zodResolver(Schema),
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: LaunchPadFormData) => {
     console.log(data);
   };
 
@@ -77,6 +84,11 @@ export default function CreateLaunchpad() {
             { value: "decentralized", label: "Decentralized" },
           ]}
         />
+
+        <WalletList control={control} />
+
+        <WalletVotingPower control={control} />
+
         <RadioInput
           name="incubationNeeded"
           label="Incubation Needed?"
@@ -104,8 +116,17 @@ export default function CreateLaunchpad() {
             { value: false, label: "No" },
           ]}
         />
+        <RadioInput
+          name="currency"
+          label="Choose Currency"
+          control={control}
+          radio={[
+            { value: "usdt", label: "USDT" },
+            { value: "usdc", label: "USDC" },
+          ]}
+        />
 
-        <SelectedChains />
+        <SelectedChains control={control} />
       </Section>
 
       <Submit type="submit">Next</Submit>
@@ -122,7 +143,7 @@ const Form = styled.form`
 const Section = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 30px;
   padding: 30px 32px;
   background: var(--black2);
 

@@ -13,7 +13,7 @@ export type InputProps = {
   radio?: [Radio, Radio];
 } & UseControllerProps<any>;
 
-type FieldList<T> = ({ name: keyof T } & Omit<InputProps, "name">)[];
+// type FieldList<T> = ({ name: keyof T } & Omit<InputProps, "name">)[];
 
 /** Usage of FieldList<T>
  * 

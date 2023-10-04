@@ -1,9 +1,15 @@
 import styled from "@emotion/styled";
 import { FieldLabel, FormInputStyle } from "../styles/form";
-import useSelectedChain from "../hooks/useSelectedChain";
+import { useWatch } from "react-hook-form";
+import { InputProps } from "../types/form";
+import { LaunchPadFormData } from "..";
 
-const SelectedChains = () => {
-  const { blockchain } = useSelectedChain();
+const SelectedChains = ({ control }: Pick<InputProps, "control">) => {
+  const blockchain = useWatch<LaunchPadFormData, "blockchain">({
+    name: "blockchain",
+    control,
+    defaultValue: { name: "", net: "" },
+  });
 
   return (
     <Wrapper>

@@ -39,7 +39,7 @@ const RadioInput = ({ placeholder, label, radio, required, ...rest }: InputProps
           </Item>
         ))}
 
-        <Input {...field} />
+        <Input {...field} value="" />
       </Group>
 
       {fieldState.isTouched && fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
@@ -70,6 +70,7 @@ const Item = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Input = styled.input`
