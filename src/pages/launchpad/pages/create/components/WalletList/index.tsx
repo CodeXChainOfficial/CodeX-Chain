@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "@mui/material/Button";
-import { useController } from "react-hook-form";
+import { useController, useWatch } from "react-hook-form";
 import { InputProps } from "../../types/form";
 import { LaunchPadFormData } from "../..";
 import { FormInputStyle } from "../../styles/form";
 import { media } from "@/shared/styles/media";
 
-const WalletList = ({ name, control }: InputProps) => {
+const WalletList = ({ control }: Pick<InputProps, "control">) => {
   const [count, setCount] = useState(1);
+
+  const launchpadType = useWatch<LaunchPadFormData, "launchPadType">({
+    name: "launchPadType",
+    control,
+    defaultValue: "",
+  });
 
   const { field } = useController<LaunchPadFormData, "wallets">({
     name: "wallets",
@@ -16,13 +22,18 @@ const WalletList = ({ name, control }: InputProps) => {
     defaultValue: [],
   });
 
-  const canAddMore = field.value.length >= count;
+  useEffect(() => {
+    if (launchpadType !== "centralized") return;
+
+    setCount(1);
+    field.onChange({ target: { value: [] } });
+  }, [launchpadType]);
+
+  const canAddMore = field.value.length >= count && launchpadType === "decentralized";
 
   const handleChange = (value: string, index: number) => {
     const wallets = [...field.value];
-
     wallets[index] = value;
-
     field.onChange({ target: { value: wallets.filter((w) => w) } });
   };
 
@@ -35,11 +46,13 @@ const WalletList = ({ name, control }: InputProps) => {
     setCount((prev) => --prev);
   };
 
+  if (launchpadType === "") return <></>;
+
   return (
     <Wrapper>
       {new Array(count).fill(0).map((item, index) => (
         <Group key={index + item}>
-          <Input onChange={(e) => handleChange(e.target.value, index)} />
+          <Input value={field.value[index] ?? ""} onChange={(e) => handleChange(e.target.value, index)} />
 
           <div className="button-group">
             <StyledButton onClick={handleClick} className={canAddMore ? "" : "disabled"}>

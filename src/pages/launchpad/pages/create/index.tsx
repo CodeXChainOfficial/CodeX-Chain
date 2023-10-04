@@ -19,12 +19,13 @@ const Schema = z.object({
   description: z.string().optional(),
   wallet: z.string().optional(),
   wallets: z.array(z.string()),
-  launchPadType: z.string().optional(),
+  // launchPadType: z.string().optional(),
+  launchPadType: z.union([z.literal("centralized"), z.literal("decentralized"), z.literal("")]),
   incubationNeeded: z.boolean().optional(),
   milestoneNeeded: z.boolean().optional(),
   blockchain: z.object({
     name: z.string(),
-    net: z.string(),
+    net: z.union([z.literal("mainnet"), z.literal("testnet"), z.literal("")]),
   }),
   generateDashboard: z.boolean().optional(),
   currency: z.string().optional(),
@@ -83,7 +84,7 @@ export default function CreateLaunchpad() {
           ]}
         />
 
-        <WalletList name="wallets" control={control} />
+        <WalletList control={control} />
 
         <RadioInput
           name="incubationNeeded"
