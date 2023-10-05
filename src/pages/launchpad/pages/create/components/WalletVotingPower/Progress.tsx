@@ -46,7 +46,7 @@ const VotingProgress = ({ value, max }: Props) => {
 const Wrapper = styled.div`
   position: relative;
   width: min(400px, 100%);
-  height: 16px;
+  height: 8px;
   display: grid;
   place-items: center;
 

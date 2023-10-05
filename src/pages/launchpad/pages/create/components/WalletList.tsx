@@ -52,9 +52,11 @@ const WalletList = ({ control }: Pick<InputProps, "control">) => {
           <Input value={field.value[index] ?? ""} onChange={(e) => handleChange(e.target.value, index)} />
 
           <div className="button-group">
-            <StyledButton onClick={handleClick} className={canAddMore ? "" : "disabled"}>
-              Add More
-            </StyledButton>
+            {launchpadType !== "centralized" && (
+              <StyledButton onClick={handleClick} disabled={!canAddMore}>
+                Add More
+              </StyledButton>
+            )}
 
             {index > 0 && <RemoveButton onClick={() => handleRemove(index)}>Remove</RemoveButton>}
           </div>
@@ -100,11 +102,6 @@ const StyledButton = styled(Button)`
   padding: 8px 32px;
   border: 1px solid transparent;
   cursor: pointer;
-
-  &.disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
 
   &:hover {
     background-color: var(--blue);

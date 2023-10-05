@@ -22,13 +22,13 @@ const VotingCounter = ({ value, minValue, maxValue, onIncrement, onDecrement }: 
 
   return (
     <Wrapper>
-      <StyledButton onClick={raiseDecrement} className={disableDecrement ? "disabled" : ""}>
+      <StyledButton onClick={raiseDecrement} disabled={disableDecrement}>
         -
       </StyledButton>
 
       <Value>{value}</Value>
 
-      <StyledButton onClick={raiseIncrement} className={disableIncrement ? "disabled" : ""}>
+      <StyledButton onClick={raiseIncrement} disabled={disableIncrement}>
         +
       </StyledButton>
     </Wrapper>
@@ -60,10 +60,10 @@ const StyledButton = styled(Button)`
   margin: 0;
   background-color: var(--contrast-white-10);
 
-  &.disabled {
+  /* &.disabled {
     cursor: not-allowed;
     opacity: 0.5;
-  }
+  } */
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);

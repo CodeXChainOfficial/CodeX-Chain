@@ -11,8 +11,6 @@ const CreateDAO = ({ control }: Pick<InputProps, "control">) => {
 
   return (
     <Wrapper>
-      <EmptyDiv />
-      <EmptyDiv />
       <StyledButton>Create DAO</StyledButton>
     </Wrapper>
   );
@@ -48,12 +46,6 @@ const StyledButton = styled(Button)`
 
   &:hover {
     background-color: var(--blue);
-  }
-`;
-
-const EmptyDiv = styled.div`
-  ${media.sm} {
-    display: none;
   }
 `;
 
