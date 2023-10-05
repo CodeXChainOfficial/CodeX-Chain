@@ -9,19 +9,17 @@ import VotingCounter from "./Counter";
 import VotingProgress from "./Progress";
 
 const WalletVotingPower = ({ control }: Pick<InputProps, "control">) => {
-  const wallets = useWatchWallets({ control });
-
-  const length = wallets.length;
+  const walletCount = useWatchWallets({ control }).length;
 
   const [votingPower, setVotingPower] = useState(1);
 
   const launchpadType = useWatchLaunchPadType({ control });
 
   useEffect(() => {
-    setVotingPower(length);
-  }, [length]);
+    setVotingPower(walletCount);
+  }, [walletCount]);
 
-  if (launchpadType !== "decentralized" || !wallets.length) return <></>;
+  if (launchpadType !== "decentralized" || !walletCount) return <></>;
 
   const handleIncrement = () => {
     setVotingPower((prev) => ++prev);
@@ -38,12 +36,13 @@ const WalletVotingPower = ({ control }: Pick<InputProps, "control">) => {
       <Group>
         <VotingCounter
           value={votingPower}
-          minValue={Math.round(length / 2)}
-          maxValue={length}
+          minValue={Math.round(walletCount / 2)}
+          maxValue={walletCount}
           onDecrement={handleDecrement}
           onIncrement={handleIncrement}
         />
-        <VotingProgress value={votingPower} max={length} />
+
+        <VotingProgress value={votingPower} max={walletCount} />
       </Group>
     </Wrapper>
   );
@@ -57,10 +56,12 @@ const Wrapper = styled.div`
 const Group = styled.div`
   display: flex;
   align-items: center;
+  gap: 50px;
   flex-wrap: wrap;
   justify-content: space-around;
   width: min(800px, 100%);
   margin: auto;
+  border: 1px solid white;
 `;
 
 export default WalletVotingPower;

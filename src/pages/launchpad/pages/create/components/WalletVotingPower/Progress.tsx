@@ -13,24 +13,28 @@ const VotingProgress = ({ value, max }: Props) => {
     value: "progress-value",
   };
 
-  value = max > 0 ? value * Math.ceil(100 / max) : 100;
-
-  value = value > 100 ? 100 : value < 0 ? 0 : value;
-
-  const animateToNewValue = () => {
-    const progValue = "." + classes.value;
-
-    const x = (100 - value) * -1;
-    gsap.to(progValue, { xPercent: x, duration: 1, transformOrigin: "left center", ease: "power1.out" });
-  };
+  const percent = convertValueToPercentage(value);
 
   useEffect(() => {
-    animateToNewValue();
-  }, [value]);
+    animateToNewValue(percent);
+  }, [percent]);
+
+  function convertValueToPercentage(value: number) {
+    // Example: let value == 3, max = 5; 3 * (100 / 5) = 60 (that is, 60%).
+    const percent = max > 0 ? value * Math.ceil(100 / max) : 100;
+    return percent > 100 ? 100 : percent < 0 ? 0 : percent; // clip percent between 0 and 100.
+  }
+
+  const animateToNewValue = (value: number) => {
+    const progValue = "." + classes.value;
+
+    const xPercent = (100 - value) * -1;
+    gsap.to(progValue, { xPercent, transformOrigin: "left center", ease: "power1.out" });
+  };
 
   return (
     <Wrapper>
-      <span>{value}%</span>
+      <span>{percent}%</span>
 
       <div>
         <Progress className={classes.value} />
@@ -43,12 +47,12 @@ const Wrapper = styled.div`
   position: relative;
   width: min(400px, 100%);
   height: 16px;
+  display: grid;
+  place-items: center;
 
   span {
     position: absolute;
-    top: -10px;
-    left: 50%;
-    translate: 0 -50%;
+    top: -30px;
   }
 
   & > div {
@@ -64,13 +68,11 @@ const Wrapper = styled.div`
 
 const Progress = styled.div`
   position: absolute;
-  /* bottom: 0; */
   left: 0;
   background-color: var(--blue);
   border-radius: inherit;
   height: inherit;
   width: 100%;
-  /* transform: translateX(-100%); */
 `;
 
 export default VotingProgress;
