@@ -12,6 +12,7 @@ import { Button } from "@mui/material";
 import SelectedChains from "./components/SelectedChains";
 import WalletList from "./components/WalletList";
 import WalletVotingPower from "./components/WalletVotingPower";
+import CreateDAO from "./components/CreateDAO";
 
 const Schema = z.object({
   // name: z.string().min(3, "Name must contain at least 3 characters"),
@@ -84,6 +85,8 @@ export default function CreateLaunchpad() {
             { value: "decentralized", label: "Decentralized" },
           ]}
         />
+
+        <CreateDAO control={control} />
 
         <WalletList control={control} />
 
