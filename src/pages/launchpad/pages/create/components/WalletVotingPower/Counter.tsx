@@ -40,6 +40,9 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   width: 200px;
+  border: 1px solid var(--contrast-white-10);
+  padding: 10px 14px;
+  border-radius: 8px;
 `;
 
 const StyledButton = styled(Button)`
@@ -50,12 +53,12 @@ const StyledButton = styled(Button)`
   letter-spacing: 1px;
   text-transform: capitalize;
   border-radius: 8px;
-  background-color: var(--blue);
   padding: 8px 32px;
   border: 1px solid transparent;
   cursor: pointer;
   width: auto;
   margin: 0;
+  background-color: var(--contrast-white-10);
 
   &.disabled {
     cursor: not-allowed;
@@ -63,7 +66,7 @@ const StyledButton = styled(Button)`
   }
 
   &:hover {
-    background-color: var(--blue);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 `;
 
