@@ -1,14 +1,19 @@
 import styled from "@emotion/styled";
-import { Outlet } from "react-router-dom";
+import CreateLaunchpad from "./pages/create";
+import LaunchpadResult from "./pages/result";
+import useLaunchPadPage from "./data/useLaunchPadPage";
 
 export default function Launchpad() {
+  const { page } = useLaunchPadPage();
+
   return (
     <Main>
       <section>
         <Title>LaunchPad</Title>
       </section>
 
-      <Outlet />
+      {page === "create" ? <CreateLaunchpad /> : <LaunchpadResult />}
+      {/* <LaunchpadResult /> */}
     </Main>
   );
 }

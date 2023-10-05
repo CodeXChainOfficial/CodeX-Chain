@@ -5,7 +5,7 @@ const Home = () => {
     <main>
       <section>Home</section>
 
-      <Navigate to="/launchpad" replace={true} />
+      <Navigate to="launchpad" replace={true} />
     </main>
   );
 };
