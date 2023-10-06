@@ -6,6 +6,7 @@ import App from "./App";
 import Error from "./pages/error";
 import Home from "./pages/home";
 import Launchpad from "./pages/launchpad";
+import { AppRoutes } from "./shared/constants";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -13,7 +14,7 @@ const router = createBrowserRouter(
       <Route errorElement={<Error />}>
         <Route index element={<Home />} />
 
-        <Route path="launchpad" element={<Launchpad />} />
+        <Route path={AppRoutes.launchpad + "/*"} element={<Launchpad />} />
 
         {/* <Route path="launchpad/*" element={<Launchpad />}>
           <Route index element={<CreateLaunchpad />} />

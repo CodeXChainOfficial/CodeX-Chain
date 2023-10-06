@@ -14,9 +14,12 @@ import WalletList from "./components/WalletList";
 import WalletVotingPower from "./components/WalletVotingPower";
 import CreateDAO from "./components/CreateDAO";
 import useLaunchPadPage from "../../data/useLaunchPadPage";
+import { useNavigate } from "react-router-dom";
+import { LaunchpadRoutes } from "../../constants";
 
 export default function CreateLaunchpad() {
-  const { setPage } = useLaunchPadPage();
+  const {} = useLaunchPadPage();
+  const navigate = useNavigate();
 
   const { control, handleSubmit } = useForm<LaunchPadFormData>({
     defaultValues: {
@@ -36,7 +39,7 @@ export default function CreateLaunchpad() {
 
   const onSubmit = (data: LaunchPadFormData) => {
     console.log(data);
-    setPage("result");
+    navigate(LaunchpadRoutes.resultPath);
   };
 
   return (
@@ -174,10 +177,12 @@ const Schema = z.object({
   launchPadType: z.union([z.literal("centralized"), z.literal("decentralized"), z.literal("")]),
   incubationNeeded: z.boolean().optional(),
   milestoneNeeded: z.boolean().optional(),
-  blockchain: z.object({
-    name: z.string(),
-    net: z.union([z.literal("mainnet"), z.literal("testnet"), z.literal("")]),
-  }),
+  blockchain: z
+    .object({
+      name: z.string(),
+      net: z.union([z.literal("mainnet"), z.literal("testnet"), z.literal("")]),
+    })
+    .optional(),
   generateDashboard: z.boolean().optional(),
   currency: z.string().optional(),
 });

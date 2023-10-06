@@ -2,8 +2,13 @@ import styled from "@emotion/styled";
 import { ResultLayer } from "./components/ResultLayer";
 import Button from "@mui/material/Button";
 import DeployLoader from "./components/DeployLoader";
+import { useEffect } from "react";
 
 export default function LaunchpadResult() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <>
       <Section>

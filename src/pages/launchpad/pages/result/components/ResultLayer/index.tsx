@@ -1,8 +1,17 @@
 import styled from "@emotion/styled";
 import { media } from "@/shared/styles/media";
+import ResultLayerHeader from "./Header";
+
+type Props = {
+  title: string;
+};
 
 export const ResultLayer = () => {
-  return <Section></Section>;
+  return (
+    <Section>
+      <ResultLayerHeader title="Title" />
+    </Section>
+  );
 };
 
 const Section = styled.section`
@@ -19,3 +28,5 @@ const Section = styled.section`
     padding-inline: 10px;
   }
 `;
+
+const Stack = styled.div``;

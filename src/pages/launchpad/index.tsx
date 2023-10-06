@@ -1,19 +1,21 @@
 import styled from "@emotion/styled";
 import CreateLaunchpad from "./pages/create";
 import LaunchpadResult from "./pages/result";
-import useLaunchPadPage from "./data/useLaunchPadPage";
+import { Route, Routes } from "react-router-dom";
+import { LaunchpadRoutes } from "./constants";
 
 export default function Launchpad() {
-  const { page } = useLaunchPadPage();
-
   return (
     <Main>
       <section>
         <Title>LaunchPad</Title>
       </section>
 
-      {page === "create" ? <CreateLaunchpad /> : <LaunchpadResult />}
-      {/* <LaunchpadResult /> */}
+      <Routes>
+        <Route path="/" element={<CreateLaunchpad />} />
+        <Route path={LaunchpadRoutes.result} element={<LaunchpadResult />} />
+        <Route path="*" element={<div>Error: page not found!</div>} />
+      </Routes>
     </Main>
   );
 }
