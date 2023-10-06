@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import styled from "@emotion/styled";
-import Button from "@mui/material/Button";
 import DeployLoader from "./components/DeployLoader";
 import { ResultLayer } from "./components/ResultLayer";
 import { useLaunchPadForm } from "../../data/useLaunchPad";
+import DeployButton from "./components/DeployButton";
 
 export default function LaunchpadResult() {
   const [data] = useLaunchPadForm();
@@ -46,10 +46,10 @@ export default function LaunchpadResult() {
         ]}
       />
 
-      {/* <DeployLoader /> */}
+      <DeployLoader />
 
       <ButtonSection>
-        <DeployButton>Autodeploy</DeployButton>
+        <DeployButton />
       </ButtonSection>
     </>
   );
@@ -80,20 +80,4 @@ const Text = styled.p`
 const ButtonSection = styled.section`
   display: flex;
   justify-content: flex-end;
-`;
-
-const DeployButton = styled(Button)`
-  color: var(--white);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 25.6px;
-  letter-spacing: 0.8px;
-  padding: 8px 16px;
-  width: max-content;
-  border-radius: 4px;
-  border: none;
-  background: var(--gradient1);
-  cursor: pointer;
-  margin: 80px 0 0 auto;
-  text-transform: none;
 `;

@@ -1,18 +1,25 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import Modal from "@/shared/components/Modal";
+import LoaderSvg from "@/shared/assets/LoaderSvg";
+import { useConfirmationCount } from "@/pages/launchpad/data/useLaunchPad";
 
 const DeployLoader = () => {
-  const [open, setOpen] = useState(true);
+  const [confirmationCount, setConfirmationCount] = useConfirmationCount();
 
-  const handleClose = () => {};
+  const open = confirmationCount > 2;
+
+  const handleClose = () => {
+    setConfirmationCount(2);
+  };
 
   return (
-    <Modal open={open}>
+    <Modal open={open} onClose={handleClose}>
       <Wrapper>
         <Title>Loading</Title>
 
         <Text>Wait for Automated Deployment on Vercel Server</Text>
+
+        <StyledLoader />
       </Wrapper>
     </Modal>
   );
@@ -24,6 +31,7 @@ const Wrapper = styled.div`
   padding: 32px;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   border-radius: 16px;
   background: var(--black2);
 `;
@@ -45,6 +53,10 @@ const Text = styled.p`
   letter-spacing: 1.2px;
   max-width: 350px;
   margin: 30px auto;
+`;
+
+const StyledLoader = styled(LoaderSvg)`
+  margin-inline: auto;
 `;
 
 export default DeployLoader;
