@@ -145,4 +145,5 @@ const testnet = [
   "cronos",
   "ethereum",
   "arbritrum nova",
+  "mumbay",
 ];
