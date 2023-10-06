@@ -4,10 +4,10 @@ import { useWatch } from "react-hook-form";
 import { FieldLabel } from "../../styles/form";
 import { InputProps } from "../../types/form";
 import useWatchLaunchPadType from "../../hooks/useWatchLaunchPadType";
-import { LaunchPadFormData } from "../..";
 import VotingCounter from "./Counter";
 import VotingProgress from "./Progress";
 import { media } from "@/shared/styles/media";
+import { LaunchPadFormData } from "@/pages/launchpad/constants";
 
 const WalletVotingPower = ({ control }: Pick<InputProps, "control">) => {
   const walletCount = useWatchWallets({ control }).length;
