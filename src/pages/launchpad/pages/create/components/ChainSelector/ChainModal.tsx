@@ -61,7 +61,7 @@ const Wrapper = styled.div`
   background-color: var(--black);
   border: 2px solid var(--black);
   box-shadow: 24;
-  padding: 10px;
+  padding: 20px;
   padding-inline-end: 0;
   height: 100%;
   max-height: 98vh;
@@ -80,16 +80,17 @@ const Title = styled.h3`
 const GroupContainer = styled.div`
   overflow-y: auto;
   height: calc(100% - 60px);
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
-  padding-inline-end: 10px;
+  padding-inline-end: 20px;
   scrollbar-gutter: stable;
 `;
 
 const Group = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 15px;
 
   ${media.sm} {
     grid-template-columns: 1fr;
@@ -103,6 +104,7 @@ const Title2 = styled.h4`
   line-height: 32px;
   letter-spacing: 1px;
   text-transform: capitalize;
+  margin-block-start: 20px;
 `;
 
 export default ChainModal;

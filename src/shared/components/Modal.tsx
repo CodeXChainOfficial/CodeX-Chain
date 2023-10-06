@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   inset: 0;
   display: grid;
   place-items: center;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
 
   &.canClose {
     cursor: pointer;

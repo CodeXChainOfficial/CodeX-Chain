@@ -24,9 +24,14 @@ const Item = styled(Button)`
   justify-content: flex-start;
   gap: 10px;
   color: var(--white);
+  background-color: var(--black2);
 
   &.selected {
     background-color: var(--blue);
+  }
+
+  &:hover {
+    background-color: var(--black2);
   }
 
   span {
