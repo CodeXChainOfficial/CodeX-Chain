@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Button from "@mui/material/Button";
 import { useController } from "react-hook-form";
 import { InputProps } from "../types/form";
-import { LaunchPadFormData } from "..";
+import { LaunchPadFormData } from "@/pages/launchpad/constants";
 import { FormInputStyle } from "../styles/form";
 import { media } from "@/shared/styles/media";
 import useWatchLaunchPadType from "../hooks/useWatchLaunchPadType";

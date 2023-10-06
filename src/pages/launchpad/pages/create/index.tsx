@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "./components/FormInput";
@@ -13,32 +12,21 @@ import SelectedChains from "./components/SelectedChains";
 import WalletList from "./components/WalletList";
 import WalletVotingPower from "./components/WalletVotingPower";
 import CreateDAO from "./components/CreateDAO";
-import useLaunchPadPage from "../../data/useLaunchPadPage";
+import useLaunchPadForm from "../../data/useLaunchPadForm";
 import { useNavigate } from "react-router-dom";
-import { LaunchpadRoutes } from "../../constants";
+import { LaunchPadFormData, LaunchPadFormSchema, LaunchpadRoutes } from "../../constants";
 
 export default function CreateLaunchpad() {
-  const {} = useLaunchPadPage();
   const navigate = useNavigate();
+  const { data, setData } = useLaunchPadForm();
 
   const { control, handleSubmit } = useForm<LaunchPadFormData>({
-    defaultValues: {
-      name: "",
-      wallet: "",
-      description: "",
-      logo: "",
-      launchPadType: "",
-      incubationNeeded: false,
-      milestoneNeeded: false,
-      generateDashboard: false,
-      currency: "",
-      wallets: [],
-    },
-    resolver: zodResolver(Schema),
+    defaultValues: data,
+    resolver: zodResolver(LaunchPadFormSchema),
   });
 
   const onSubmit = (data: LaunchPadFormData) => {
-    console.log(data);
+    setData(data);
     navigate(LaunchpadRoutes.resultPath);
   };
 
@@ -165,26 +153,3 @@ const Submit = styled(Button)`
   cursor: pointer;
   margin: 80px 0 0 auto;
 `;
-
-const Schema = z.object({
-  // name: z.string().min(3, "Name must contain at least 3 characters"),
-  name: z.string().optional(),
-  logo: z.string().optional(), // will be set to the path of the file.
-  description: z.string().optional(),
-  wallet: z.string().optional(),
-  wallets: z.array(z.string()),
-  // launchPadType: z.string().optional(),
-  launchPadType: z.union([z.literal("centralized"), z.literal("decentralized"), z.literal("")]),
-  incubationNeeded: z.boolean().optional(),
-  milestoneNeeded: z.boolean().optional(),
-  blockchain: z
-    .object({
-      name: z.string(),
-      net: z.union([z.literal("mainnet"), z.literal("testnet"), z.literal("")]),
-    })
-    .optional(),
-  generateDashboard: z.boolean().optional(),
-  currency: z.string().optional(),
-});
-
-export type LaunchPadFormData = z.infer<typeof Schema>;

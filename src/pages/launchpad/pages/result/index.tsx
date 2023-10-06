@@ -1,8 +1,8 @@
+import { useEffect } from "react";
 import styled from "@emotion/styled";
 import { ResultLayer } from "./components/ResultLayer";
 import Button from "@mui/material/Button";
 import DeployLoader from "./components/DeployLoader";
-import { useEffect } from "react";
 
 export default function LaunchpadResult() {
   useEffect(() => {
@@ -16,11 +16,11 @@ export default function LaunchpadResult() {
         <Text>Double-check that everything is correct </Text>
       </Section>
 
-      <ResultLayer />
+      <ResultLayer title="launchpad configuration" list={[]} />
 
       {/* <DeployLoader /> */}
 
-      <ResultLayer />
+      <ResultLayer title="launchpad setting" list={[]} />
 
       <ButtonSection>
         <DeployButton>Autodeploy</DeployButton>
