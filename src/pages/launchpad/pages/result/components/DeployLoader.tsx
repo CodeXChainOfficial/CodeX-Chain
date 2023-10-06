@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import Modal from "@/shared/components/Modal";
 import LoaderSvg from "@/shared/assets/LoaderSvg";
 import { useConfirmationCount } from "@/pages/launchpad/data/useLaunchPad";
+import CloseSvg from "@/shared/assets/CloseSvg";
+import Button from "@mui/material/Button";
 
 const DeployLoader = () => {
   const [confirmationCount, setConfirmationCount] = useConfirmationCount();
@@ -13,9 +15,15 @@ const DeployLoader = () => {
   };
 
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={open}>
       <Wrapper>
-        <Title>Loading</Title>
+        <Header>
+          <Title>Loading</Title>
+
+          <Button onClick={handleClose} style={{ padding: "4px", minWidth: "auto", color: "var(--white)" }}>
+            <CloseSvg />
+          </Button>
+        </Header>
 
         <Text>Wait for Automated Deployment on Vercel Server</Text>
 
@@ -34,6 +42,13 @@ const Wrapper = styled.div`
   justify-content: center;
   border-radius: 16px;
   background: var(--black2);
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;
 
 const Title = styled.h2`
