@@ -1,13 +1,18 @@
 import { useEffect } from "react";
 import styled from "@emotion/styled";
-import { ResultLayer } from "./components/ResultLayer";
 import Button from "@mui/material/Button";
 import DeployLoader from "./components/DeployLoader";
+import { ResultLayer } from "./components/ResultLayer";
+import { useLaunchPadForm } from "../../data/useLaunchPad";
 
 export default function LaunchpadResult() {
+  const [data] = useLaunchPadForm();
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
+  const chain = data.blockchain ? `${data.blockchain?.name} ${data.blockchain?.net}` : "";
 
   return (
     <>
@@ -16,11 +21,32 @@ export default function LaunchpadResult() {
         <Text>Double-check that everything is correct </Text>
       </Section>
 
-      <ResultLayer title="launchpad configuration" list={[]} />
+      <ResultLayer
+        title="launchpad configuration"
+        list={[
+          { name: "Name", value: data.name },
+          { name: "Logo", value: data.logo },
+          { name: "Description", value: data.description },
+          { name: "Wallet", value: data.wallet },
+        ]}
+      />
+
+      <ResultLayer
+        title="launchpad setting"
+        list={[
+          { name: "LaunchPad Type", value: data.launchPadType },
+          { name: "Wallet Voting Power", value: data.walletVotingPower },
+          { name: "Incubation Need?", value: data.incubationNeeded ? "Yes" : "No" },
+          { name: "Generate Dashboard?", value: data.generateDashboard ? "Yes" : "No" },
+          { name: "Milestone Needed?", value: data.milestoneNeeded ? "Yes" : "No" },
+          { name: "Currency", value: data.currency },
+          { name: "Selected Deploy", value: "Network" },
+          { name: "Deploy Option", value: "Single Chain" },
+          { name: "Chain Selection", value: chain },
+        ]}
+      />
 
       {/* <DeployLoader /> */}
-
-      <ResultLayer title="launchpad setting" list={[]} />
 
       <ButtonSection>
         <DeployButton>Autodeploy</DeployButton>

@@ -16,6 +16,7 @@ export const LaunchPadFormSchema = z.object({
   description: z.string().optional(),
   wallet: z.string().optional(),
   wallets: z.array(z.string()),
+  walletVotingPower: z.number(),
   // launchPadType: z.string().optional(),
   launchPadType: z.union([z.literal("centralized"), z.literal("decentralized"), z.literal("")]),
   incubationNeeded: z.boolean().optional(),

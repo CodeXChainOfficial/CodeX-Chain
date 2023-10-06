@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 import { media } from "@/shared/styles/media";
 import ResultLayerHeader from "./Header";
+import ConfirmButton from "./ConfirmButton";
 
 type ResultItem = {
-  name: string;
-  value: string;
+  name?: string;
+  value?: string | number;
   type?: "logo";
 };
 
@@ -16,16 +17,16 @@ type Props = {
 export const ResultLayer = ({ title, list }: Props) => {
   return (
     <Section>
-      <ResultLayerHeader title="Title" />
+      <ResultLayerHeader title={title} />
 
-      <Stack>
-        {list.map((item) => (
-          <>
-            <Item>{item.name}</Item>
-            <Item>{item.value}</Item>
-          </>
-        ))}
-      </Stack>
+      {list.map((item, idx) => (
+        <Group key={idx + 1}>
+          <Item>{item.name || "Item"}</Item>
+          <Item>{item.value || "Not set"}</Item>
+        </Group>
+      ))}
+
+      <ConfirmButton />
     </Section>
   );
 };
@@ -33,21 +34,23 @@ export const ResultLayer = ({ title, list }: Props) => {
 const Section = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 12px;
   padding: 30px 32px;
   background: var(--black2);
-  height: 200px;
+  /* height: 200px; */
   margin-block-end: 20px;
   border-radius: 8px;
+  /* border: 1px solid white; */
 
   ${media.sm} {
     padding-inline: 10px;
   }
 `;
 
-const Stack = styled.div`
+const Group = styled.div`
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 `;
 
 const Item = styled.div`

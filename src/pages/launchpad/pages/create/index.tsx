@@ -12,21 +12,21 @@ import SelectedChains from "./components/SelectedChains";
 import WalletList from "./components/WalletList";
 import WalletVotingPower from "./components/WalletVotingPower";
 import CreateDAO from "./components/CreateDAO";
-import useLaunchPadForm from "../../data/useLaunchPadForm";
+import { useLaunchPadForm } from "../../data/useLaunchPad";
 import { useNavigate } from "react-router-dom";
 import { LaunchPadFormData, LaunchPadFormSchema, LaunchpadRoutes } from "../../constants";
 
 export default function CreateLaunchpad() {
   const navigate = useNavigate();
-  const { data, setData } = useLaunchPadForm();
+  const [formData, setFormData] = useLaunchPadForm();
 
   const { control, handleSubmit } = useForm<LaunchPadFormData>({
-    defaultValues: data,
+    defaultValues: formData,
     resolver: zodResolver(LaunchPadFormSchema),
   });
 
   const onSubmit = (data: LaunchPadFormData) => {
-    setData(data);
+    setFormData(data);
     navigate(LaunchpadRoutes.resultPath);
   };
 

@@ -1,4 +1,5 @@
 import { LaunchpadRoutes } from "@/pages/launchpad/constants";
+import { useConfirmationCount } from "@/pages/launchpad/data/useLaunchPad";
 import EditSvg from "@/shared/assets/EditSvg";
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
@@ -6,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 const ResultLayerHeader = ({ title }: { title: string }) => {
   const navigate = useNavigate();
+  const [_, setConfirmationCount] = useConfirmationCount();
 
   const handleClick = () => {
     navigate(LaunchpadRoutes.rootPath);
+    setConfirmationCount(0);
   };
 
   return (
@@ -25,6 +28,7 @@ const ResultLayerHeader = ({ title }: { title: string }) => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-block-end: 20px;
 `;
 
 const Title = styled.h4`
