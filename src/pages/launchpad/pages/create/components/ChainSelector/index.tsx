@@ -1,11 +1,10 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
-import { useController } from "react-hook-form";
-import { InputProps } from "../../types/form";
-import { media } from "@/shared/styles/media";
 import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
+import { useController } from "react-hook-form";
+import { media } from "@/shared/styles/media";
 import ChainModal from "./ChainModal";
+import { InputProps } from "../../types/form";
 import { FieldError } from "../../styles/form";
 import { Blockchain } from "../../types";
 
@@ -35,22 +34,14 @@ const ChainSelector = ({ name, control, required }: InputProps) => {
 
       {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
 
-      <Modal
+      <ChainModal
+        mainnetChains={mainnet}
+        testnetChains={testnet}
+        selectedChain={value}
+        onSelect={handleSelect}
         open={open}
         onClose={handleClose}
-        // aria-labelledby="modal-modal-title"
-        // aria-describedby="modal-modal-description"
-      >
-        <ModalBox>
-          <ChainModal
-            mainnetChains={mainnet}
-            testnetChains={testnet}
-            selectedChain={value}
-            onSelect={handleSelect}
-            onClose={handleClose}
-          />
-        </ModalBox>
-      </Modal>
+      />
     </Wrapper>
   );
 };
@@ -69,20 +60,6 @@ const ButtonContainer = styled.div`
   ${media.sm} {
     grid-template-columns: 1fr;
   }
-`;
-
-const ModalBox = styled.div`
-  overflow: hidden;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(600px, 100%);
-  background-color: var(--black);
-  border: 2px solid var(--black);
-  box-shadow: 24;
-  padding: 10px;
-  max-height: 98vh;
 `;
 
 const Input = styled.input`

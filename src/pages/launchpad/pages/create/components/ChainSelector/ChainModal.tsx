@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { media } from "@/shared/styles/media";
+import Modal from "@/shared/components/Modal";
 import ChainItem from "./ChainItem";
 import { Blockchain } from "../../types";
 
@@ -7,45 +8,64 @@ type Props = {
   mainnetChains: string[];
   testnetChains: string[];
   selectedChain: Blockchain;
+  open: boolean;
   onClose: () => void;
   onSelect: (blockchain: Blockchain) => void;
 };
 
-const ChainModal = ({ mainnetChains, testnetChains, selectedChain, onSelect, onClose }: Props) => {
+const ChainModal = ({ mainnetChains, testnetChains, selectedChain, onSelect, open, onClose }: Props) => {
   return (
-    <>
-      <Title>Select Blockchain</Title>
+    <Modal
+      open={open}
+      onClose={onClose}
+      // aria-labelledby="modal-modal-title"
+      // aria-describedby="modal-modal-description"
+    >
+      <Wrapper>
+        <Title>Select Blockchain</Title>
 
-      <GroupContainer>
-        <Group>
-          {mainnetChains.map((item) => (
-            <ChainItem
-              key={item}
-              blockchain={item}
-              isSelected={item === selectedChain.name && selectedChain.net === "mainnet"}
-              net="mainnet"
-              onSelect={() => onSelect({ name: item, net: "mainnet" })}
-            />
-          ))}
-        </Group>
+        <GroupContainer>
+          <Group>
+            {mainnetChains.map((item) => (
+              <ChainItem
+                key={item}
+                blockchain={item}
+                isSelected={item === selectedChain.name && selectedChain.net === "mainnet"}
+                net="mainnet"
+                onSelect={() => onSelect({ name: item, net: "mainnet" })}
+              />
+            ))}
+          </Group>
 
-        <Title2>Testnet</Title2>
+          <Title2>Testnet</Title2>
 
-        <Group>
-          {testnetChains.map((item) => (
-            <ChainItem
-              key={item}
-              blockchain={item}
-              isSelected={item === selectedChain.name && selectedChain.net === "testnet"}
-              net="testnet"
-              onSelect={() => onSelect({ name: item, net: "testnet" })}
-            />
-          ))}
-        </Group>
-      </GroupContainer>
-    </>
+          <Group>
+            {testnetChains.map((item) => (
+              <ChainItem
+                key={item}
+                blockchain={item}
+                isSelected={item === selectedChain.name && selectedChain.net === "testnet"}
+                net="testnet"
+                onSelect={() => onSelect({ name: item, net: "testnet" })}
+              />
+            ))}
+          </Group>
+        </GroupContainer>
+      </Wrapper>
+    </Modal>
   );
 };
+
+const Wrapper = styled.div`
+  overflow: hidden;
+  background-color: var(--black);
+  border: 2px solid var(--black);
+  box-shadow: 24;
+  padding: 10px;
+  padding-inline-end: 0;
+  height: 100%;
+  max-height: 98vh;
+`;
 
 const Title = styled.h3`
   color: var(--blue);
@@ -59,10 +79,11 @@ const Title = styled.h3`
 
 const GroupContainer = styled.div`
   overflow-y: auto;
-  max-height: 650px;
+  height: calc(100% - 60px);
   display: grid;
   gap: 20px;
   padding-inline-end: 10px;
+  scrollbar-gutter: stable;
 `;
 
 const Group = styled.div`
