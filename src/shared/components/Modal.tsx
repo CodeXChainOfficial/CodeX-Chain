@@ -51,6 +51,10 @@ const Wrapper = styled.div`
   &.canClose {
     cursor: pointer;
   }
+
+  & > * {
+    cursor: context-menu;
+  }
 `;
 
 export default Modal;
