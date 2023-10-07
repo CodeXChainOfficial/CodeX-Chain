@@ -35,7 +35,7 @@ const DeployLoader = () => {
 
 const Wrapper = styled.div`
   display: flex;
-  width: 680px;
+  width: min(680px, 100%);
   padding: 32px;
   flex-direction: column;
   align-items: flex-start;
