@@ -1,7 +1,18 @@
 {
   "canisters": {
+   
     "token": {
       "main": "src/token.mo"
+    },
+    "token_CDX": {
+      "main": "src/token.mo"
+    },
+    "token_CDX2": {
+      "main": "src/token.mo"
     }
+
+  
+      
+    
   }
 }
