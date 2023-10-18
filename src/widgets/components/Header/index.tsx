@@ -1,10 +1,14 @@
 import styled from "@emotion/styled";
 import { Logo } from "./components/Logo";
+import WalletPage from "./wallet";
+
 
 export default function Header() {
   return (
     <HeaderElement>
       <Logo />
+      <WalletPage />
+
     </HeaderElement>
   );
 }
