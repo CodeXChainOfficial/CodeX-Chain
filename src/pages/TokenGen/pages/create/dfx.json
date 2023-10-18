@@ -1,0 +1,12 @@
+{
+  "canisters": {
+    "token_CDX": {
+      "type": "motoko",
+      "main": "src/token.mo"
+    },
+    "token_1234": {
+      "type": "motoko",
+      "main": "src/token.mo"
+    }
+  }
+}
