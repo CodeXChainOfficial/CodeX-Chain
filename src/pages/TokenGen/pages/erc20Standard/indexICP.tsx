@@ -21,14 +21,13 @@ import { Element } from 'react-scroll';
 
   
   
- 
+
 
 
 
 
 
 const handleSectionChange = (selectedSection: string) => {
-  Section(selectedSection);
 };
 export default function CreateTokenICP() {
 

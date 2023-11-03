@@ -1,5 +1,5 @@
+import { LaunchPadFormData } from "@/pages/launchpad/constants";
 import useSWR from "swr/immutable";
-import { LaunchPadFormData } from "../constants";
 
 export const useLaunchPadForm = () => {
   const fallbackData: LaunchPadFormData = {

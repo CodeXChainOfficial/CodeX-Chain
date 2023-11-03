@@ -6,17 +6,14 @@ import App from "./App";
 import Error from "./pages/error";
 import Home from "./pages/home";
 import Launchpad from "./pages/launchpad";
-import ICP20Standard from "./pages/TokenGen/pages/createToken/ICP20Standard";
-import CreateTokenICP from "./pages/TokenGen/pages/erc20Standard/indexICP";
+import CreateTokenICP from "./pages/TokenGen/pages/erc20Standard/";
 import { AppRoutes } from "./shared/constants";
-import DIP721Standard from "./pages/TokenGen/pages/createNFT/DIP721Standard";
-import DAOinfrastructure from "./pages/TokenGen/pages/createDAO/DAOinfrastructure";
-import ERC20Standard from "./pages/TokenGen/pages/erc20Standard/ERC20Standard";
-import ERC20Advance from "./pages/TokenGen/pages/erc20Standard/ERC20Advance";
-import ERC20Drop from "./pages/TokenGen/pages/erc20Standard/ERC20Drop";
-import ERC20Dropvote from "./pages/TokenGen/pages/erc20Standard/ERC20Dropvote";
-import ERC20SignatureMint from "./pages/TokenGen/pages/erc20Standard/ERC20SignatureMint";
-import ERC721Standard from "./pages/TokenGen/pages/erc20Standard/ERC721Standard";
+import ERC20Standard from "./pages/TokenGen/pages/erc20Standard/";
+import ERC20Advance from "./pages/TokenGen/pages/erc20Standard/";
+import ERC20Drop from "./pages/TokenGen/pages/erc20Standard/";
+import ERC20Dropvote from "./pages/TokenGen/pages/erc20Standard/";
+import ERC20SignatureMint from "./pages/TokenGen/pages/erc20Standard/";
+import ERC721Standard from "./pages/TokenGen/pages/erc20Standard/"
 
 
 const router = createBrowserRouter(
@@ -27,9 +24,7 @@ const router = createBrowserRouter(
 
         <Route path={AppRoutes.launchpad + "/*"} element={<Launchpad />} />
         <Route path={AppRoutes.icp + "/*"} element={<CreateTokenICP />} />
-        <Route path={AppRoutes.ICP20Standard + "/*"} element={<ICP20Standard />} />
-        <Route path={AppRoutes.DIP721Standard + "/*"} element={<DIP721Standard />} />
-        <Route path={AppRoutes.DAOinfrastructure + "/*"} element={<DAOinfrastructure />} />
+   
         <Route path={AppRoutes.ERC20Standard + "/*"} element={<ERC20Standard />} />
         <Route path={AppRoutes.ERC20Advance + "/*"} element={<ERC20Advance />} />
         <Route path={AppRoutes.ERC20Drop + "/*"} element={<ERC20Drop />} />

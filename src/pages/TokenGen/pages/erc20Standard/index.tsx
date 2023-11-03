@@ -14,7 +14,6 @@ import WalletVotingPower from "./components/WalletVotingPower";
 import CreateDAO from "./components/CreateDAO";
 import { useLaunchPadForm } from "../../data/useLaunchPad";
 import { useNavigate } from "react-router-dom";
-import { LaunchPadFormData, LaunchPadFormSchema, LaunchpadRoutes } from "../../constants";
 import React, { Key } from "react";
 import { Container, Grid } from '@mui/material';
 import ERC20Item from './card';
@@ -171,88 +170,9 @@ export default function CreateToken() {
     ];
   }
   
-  const navigate = useNavigate();
-  const [formData, setFormData] = useLaunchPadForm();
-
-  const { control, handleSubmit } = useForm<LaunchPadFormData>({
-    defaultValues: formData,
-    resolver: zodResolver(LaunchPadFormSchema),
-  });
-
-  const onSubmit = (data: LaunchPadFormData) => {
-    setFormData(data);
-    navigate(LaunchpadRoutes.resultPath);
-  };
 
   return (
-
-    
-
-   <Form onSubmit={handleSubmit(onSubmit)}>
-
-
-<Title1>Smart Contract Selection</Title1>
-
-<Container>
-<Title>ERC20 Smart Contracts</Title>
-    <Grid container spacing={3}>
-      {erc20Contracts.map((contract: { name: any; description: any; }, index: Key | null | undefined) => (
-        <Grid item xs={12} sm={6} md={3} key={index}>
-          <ERC20Item name={contract.name} description={contract.description} />
-        </Grid>
-      ))}
-    </Grid>
-  </Container>
-
-
-<Container>
-<Title>NFTs Smart Contracts</Title>
-    <Grid container spacing={3}>
-      {NFTContracts.map((contract: { name: any; description: any; }, index: Key | null | undefined) => (
-        <Grid item xs={12} sm={6} md={3} key={index}>
-          <ERC20Item name={contract.name} description={contract.description} />
-        </Grid>
-      ))}
-    </Grid>
-  </Container>
-  
-        <Section>
-          <ChainSelector name="blockchain" control={control} />
-
-       
-
-          <SelectedChains control={control} />
-
-
-          <Title>Token Configuration</Title>
-
-
-
-          <SelectedChains control={control} />
-
-
-          <FormInput name="name" control={control} placeholder="Name" />
-          <FormInput name="Token Symbol" control={control} placeholder="Token Symbol" />
-
-          <FormInput name="Token Supply" control={control} placeholder="Token Supply" />
-
-          <FormInput name="Token Decimal" control={control} placeholder="Token Supply" />
-          <ImageInput
-            name="logo"
-            control={control}
-            placeholder="JPG, PNG, GIF, or SVG of no more than 3MB. We recommend 1024x1024px." />
-
-          <Submit type="submit">Deploy</Submit>
-        </Section>
-
-
-        <Section>
-          <Title>My Tokens</Title>
-
-          <FormInput name="Token Data" control={control} placeholder="Token Info" />
-
-        </Section>
-      </Form>
+<></>
   );
 }
 

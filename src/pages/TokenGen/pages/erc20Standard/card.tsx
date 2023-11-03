@@ -87,7 +87,12 @@ const Description = styled.p`
   font-size: 16px;
 `;
 
-const MyCard = ({ name, description }) => {
+interface MyCardProps {
+  name: string;
+  description: string;
+}
+
+const MyCard: React.FC<MyCardProps> = ({ name, description }) => {
   return (
     <Card>
       <FrontFace>
