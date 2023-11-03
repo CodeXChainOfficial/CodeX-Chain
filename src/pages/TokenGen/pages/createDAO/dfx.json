@@ -1,0 +1,92 @@
+{
+  "canisters": {
+    "dip721_nft_container": {
+      "type": "motoko",
+      "main": "src/Main.mo"
+    },
+    "token_CDX": {
+      "main": "src/token.mo"
+    },
+    "token_1234": {
+      "main": "src/token.mo"
+    },
+    "token_test234": {
+      "main": "src/token.mo"
+    },
+    "token_": {
+      "main": "src/token.mo"
+    },
+    "token_testger": {
+      "main": "src/token.mo"
+    },
+    "token_rere": {
+      "main": "src/token.mo"
+    },
+    "token_rere2": {
+      "main": "src/token.mo"
+    },
+    "token_rere22": {
+      "main": "src/token.mo"
+    },
+    "token_rere222": {
+      "main": "src/token.mo"
+    },
+    "token_testtest2": {
+      "main": "src/token.mo"
+    },
+    "token_gererg": {
+      "main": "src/token.mo"
+    },
+    "token_Wolloh": {
+      "main": "src/token.mo"
+    },
+    "token_Wollohw": {
+      "main": "src/token.mo"
+    },
+    "token_Wollohw2": {
+      "main": "src/token.mo"
+    },
+    "token_kaka": {
+      "main": "src/token.mo"
+    },
+    "token_wolloh": {
+      "main": "src/token.mo"
+    },
+    "token_sss": {
+      "main": "src/token.mo"
+    },
+    "token_sss2": {
+      "main": "src/token.mo"
+    },
+    "token_ss244": {
+      "main": "src/token.mo"
+    },
+    "token_ss255": {
+      "main": "src/token.mo"
+    },
+    "token_kaka22": {
+      "main": "src/token.mo"
+    },
+    "token_kakaluxy": {
+      "main": "src/token.mo"
+    },
+    "token_luxy": {
+      "main": "src/token.mo"
+    },
+    "token_32": {
+      "main": "src/token.mo"
+    },
+    "token_wolloy": {
+      "type": "motoko",
+      "main": "src/token.mo"
+    },
+    "token_wolloy22": {
+      "type": "motoko",
+      "main": "src/token.mo"
+    },
+    "token_rer": {
+      "type": "motoko",
+      "main": "src/token.mo"
+    }
+  }
+}
