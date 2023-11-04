@@ -5,7 +5,7 @@ import "./index.css";
 import App from "./App";
 import Error from "./pages/error";
 import Home from "./pages/home";
-import CreateTokenICP from "./pages/TokenGen/pages/erc20Standard/";
+import CreateTokenICP from "./pages/TokenGen/pages/erc20Standard";
 import { AppRoutes } from "./shared/constants";
 // @ts-ignore
 import ERC20Standard from "./pages/TokenGen/pages/erc20Standard/ERC20Standard.jsx";
