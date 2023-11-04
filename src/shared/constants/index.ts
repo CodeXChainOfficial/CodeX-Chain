@@ -1,5 +1,4 @@
 export const AppRoutes = {
-  launchpad: "launchpad",
   icp: "icp",
   ICP20Standard: "ICP20Standard",
   DIP721Standard: "DIP721Standard",

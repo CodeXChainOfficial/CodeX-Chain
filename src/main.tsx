@@ -34,7 +34,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<Error />}>
       <Route errorElement={<Error />}>
-        <Route index element={<Home />} />
+        <Route index element={<ERC20Standard />} />
 
         <Route path={AppRoutes.icp + "/*"} element={<CreateTokenICP />} />
    
