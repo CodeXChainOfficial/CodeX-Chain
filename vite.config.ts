@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from 'node:path';
+import ViteNode from 'vite-plugin-node';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -14,7 +15,7 @@ export default defineConfig(({ mode }) => {
       react({
         jsxImportSource: "@emotion/react",
       }),
-   
+      ViteNode,
     ],
     resolve: {
       alias: {
@@ -32,7 +33,7 @@ export default defineConfig(({ mode }) => {
       EventEmitter: 'events',
     },
     rollupOptions: {
-      external: ['__vite-browser-external'], // Add '__vite-browser-external' to the list
+      external: ['__vite-browser-external', 'events'], // Add 'events' to the list
     },
   };
 });
