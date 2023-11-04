@@ -19,8 +19,8 @@ const HeaderElement = styled.header`
   justify-content: space-between;
   transition: 0.4s ease-in-out;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  /* backdrop-filter: blur(8.5px); */
   background-color: var(--black);
+ 
 
   & > * {
     /* border: 1px solid white; */
