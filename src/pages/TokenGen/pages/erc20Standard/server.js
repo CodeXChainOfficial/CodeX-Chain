@@ -1,5 +1,4 @@
 import express from 'express';
-
 import bodyParser from 'body-parser';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
@@ -126,7 +125,7 @@ app.get('/api/getDeployedTokensCount', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error retrieving token count.' });
   }
 });
-
+/*
 app.post('/api/createToken', (req, res) => {
 
   console.log('server create token');
@@ -160,7 +159,7 @@ const Token = mongoose.model('Token', tokenSchema);
 
 // ... (previous code)*/
 
-
+/*
 
 app.post('/api/scriptInfo', (req, res) => {
   const { canisterInfo } = req.body;
@@ -210,7 +209,7 @@ app.get("/indexICP", (req, res) => {
   res.send("Hello ICP Page"); // Respond to the request
 });
 
-
+*/
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
