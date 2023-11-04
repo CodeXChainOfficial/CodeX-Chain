@@ -8,12 +8,18 @@ import Home from "./pages/home";
 import Launchpad from "./pages/launchpad";
 import CreateTokenICP from "./pages/TokenGen/pages/erc20Standard/";
 import { AppRoutes } from "./shared/constants";
-import ERC20Standard from "./pages/TokenGen/pages/erc20Standard/";
-import ERC20Advance from "./pages/TokenGen/pages/erc20Standard/";
-import ERC20Drop from "./pages/TokenGen/pages/erc20Standard/";
-import ERC20Dropvote from "./pages/TokenGen/pages/erc20Standard/";
-import ERC20SignatureMint from "./pages/TokenGen/pages/erc20Standard/";
-import ERC721Standard from "./pages/TokenGen/pages/erc20Standard/"
+import ERC20Standard from "./pages/TokenGen/pages/erc20Standard/ERC20Standard";
+import ERC20Advance from "./pages/TokenGen/pages/erc20Standard/ERC20Advance";
+import ERC20Drop from "./pages/TokenGen/pages/erc20Standard/ERC20Drop";
+import ERC20Dropvote from "./pages/TokenGen/pages/erc20Standard/ERC20Dropvote";
+import ERC20SignatureMint from "./pages/TokenGen/pages/erc20Standard/ERC20SignatureMint";
+import ERC20Vote from "./pages/TokenGen/pages/erc20Standard/ERC20Vote";
+import ERC20SignatureMintVote from "./pages/TokenGen/pages/erc20Standard/ERC20SignatureMintVote";
+import ERC20Staking from "./pages/TokenGen/pages/erc20Standard/ERC20Staking";
+
+
+
+
 
 
 const router = createBrowserRouter(
@@ -30,7 +36,11 @@ const router = createBrowserRouter(
         <Route path={AppRoutes.ERC20Drop + "/*"} element={<ERC20Drop />} />
         <Route path={AppRoutes.ERC20Dropvote + "/*"} element={<ERC20Dropvote />} />
         <Route path={AppRoutes.ERC20SignatureMint + "/*"} element={<ERC20SignatureMint />} />
-        <Route path={AppRoutes.ERC721Standard + "/*"} element={<ERC721Standard />} />
+        <Route path={AppRoutes.ERC20SignatureMintVote + "/*"} element={<ERC20SignatureMintVote />} />
+        <Route path={AppRoutes.ERC20Vote + "/*"} element={<ERC20Vote />} />
+        <Route path={AppRoutes.ERC20Staking + "/*"} element={<ERC20Staking />} />
+
+
 
         
 

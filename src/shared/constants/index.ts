@@ -9,6 +9,11 @@ export const AppRoutes = {
   ERC20Drop:"ERC20Drop",
   ERC20Dropvote:"ERC20Dropvote",
   ERC20SignatureMint:"ERC20SignatureMint",
-  ERC721Standard:"ERC721Standard"
+  ERC721Standard:"ERC721Standard",
+  ERC20Vote:"ERC20Vote",
+  ERC20SignatureMintVote:"ERC20SignatureMintVote",
+  ERC20Staking:"ERC20Staking",
+
+
 
 } as const;
