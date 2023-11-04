@@ -7,20 +7,15 @@ import useWatchLaunchPadType from "../../hooks/useWatchLaunchPadType";
 import VotingCounter from "./Counter";
 import VotingProgress from "./Progress";
 import { media } from "@/shared/styles/media";
-import { LaunchPadFormData } from "@/pages/launchpad/constants";
 
 const WalletVotingPower = ({ control }: Pick<InputProps, "control">) => {
-  const walletCount = useWatchWallets({ control }).length;
 
   const [votingPower, setVotingPower] = useState(1);
 
   const launchpadType = useWatchLaunchPadType({ control });
 
-  useEffect(() => {
-    setVotingPower(walletCount);
-  }, [walletCount]);
 
-  if (launchpadType !== "decentralized" || !walletCount) return <></>;
+
 
   const handleIncrement = () => {
     setVotingPower((prev) => ++prev);
@@ -34,17 +29,8 @@ const WalletVotingPower = ({ control }: Pick<InputProps, "control">) => {
     <Wrapper>
       <FieldLabel>Wallet Voting Power</FieldLabel>
 
-      <Group>
-        <VotingCounter
-          value={votingPower}
-          minValue={Math.round(walletCount / 2)}
-          maxValue={walletCount}
-          onDecrement={handleDecrement}
-          onIncrement={handleIncrement}
-        />
-
-        <VotingProgress value={votingPower} max={walletCount} />
-      </Group>
+  
+        
     </Wrapper>
   );
 };
@@ -76,10 +62,4 @@ const Group = styled.div`
 
 export default WalletVotingPower;
 
-const useWatchWallets = ({ control }: Pick<InputProps, "control">) => {
-  return useWatch<LaunchPadFormData, "wallets">({
-    name: "wallets",
-    control,
-    defaultValue: [],
-  });
-};
+

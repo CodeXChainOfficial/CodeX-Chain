@@ -7,7 +7,6 @@ import { media } from "@/shared/styles/media";
 const CreateDAO = ({ control }: Pick<InputProps, "control">) => {
   const launchpadType = useWatchLaunchPadType({ control });
 
-  if (launchpadType !== "decentralized") return <></>;
 
   return (
     <Wrapper>

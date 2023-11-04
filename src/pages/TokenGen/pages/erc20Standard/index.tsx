@@ -1,22 +1,7 @@
 import styled from "@emotion/styled";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import FormInput from "./components/FormInput";
-import FormTextarea from "./components/FormTextarea";
-import ImageInput from "./components/ImageInput";
-import RadioInput from "./components/RadioInput";
-import ChainSelector from "./components/ChainSelector";
-import { media } from "@/shared/styles/media";
+
 import { Button } from "@mui/material";
-import SelectedChains from "./components/SelectedChains";
-import WalletList from "./components/WalletList";
-import WalletVotingPower from "./components/WalletVotingPower";
-import CreateDAO from "./components/CreateDAO";
-import { useLaunchPadForm } from "../../data/useLaunchPad";
-import { useNavigate } from "react-router-dom";
-import React, { Key } from "react";
-import { Container, Grid } from '@mui/material';
-import ERC20Item from './card';
+
 
 
  
@@ -189,9 +174,7 @@ const Section = styled.section`
   padding: 30px 32px;
   background: var(--black2);
 
-  ${media.sm} {
-    padding-inline: 10px;
-  }
+ 
 `;
 
 const Title = styled.h3`

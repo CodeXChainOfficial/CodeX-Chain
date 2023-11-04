@@ -2,21 +2,14 @@ import styled from "@emotion/styled";
 import { FieldLabel, FormInputStyle } from "../styles/form";
 import { useWatch } from "react-hook-form";
 import { InputProps } from "../types/form";
-import { LaunchPadFormData } from "@/pages/launchpad/constants";
 
 const SelectedChains = ({ control }: Pick<InputProps, "control">) => {
-  const blockchain = useWatch<LaunchPadFormData, "blockchain">({
-    name: "blockchain",
-    control,
-    defaultValue: { name: "", net: "" },
-  })!;
+
 
   return (
     <Wrapper>
       <FieldLabel>Deploy on:</FieldLabel>
-      <ValueLabel>
-        <span>{blockchain.name || "Select chain ☝️"}</span> <span>{blockchain.net}</span>
-      </ValueLabel>
+      
     </Wrapper>
   );
 };

@@ -1,24 +1,9 @@
-import { LaunchPadFormData } from "@/pages/launchpad/constants";
 import useSWR from "swr/immutable";
 
 export const useLaunchPadForm = () => {
-  const fallbackData: LaunchPadFormData = {
-    name: "",
-    wallet: "",
-    description: "",
-    logo: "",
-    launchPadType: "",
-    incubationNeeded: false,
-    milestoneNeeded: false,
-    generateDashboard: false,
-    currency: "",
-    wallets: [],
-    walletVotingPower: 0,
-  };
 
-  const { data, mutate } = useSWR<LaunchPadFormData>("lp-form-data", { fallbackData });
 
-  return [data, mutate] as [LaunchPadFormData, typeof mutate];
+
 };
 
 export const useConfirmationCount = () => {

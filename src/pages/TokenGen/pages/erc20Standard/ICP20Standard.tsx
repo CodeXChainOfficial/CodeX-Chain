@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled, { StyledComponent } from "@emotion/styled";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "./components/FormInput";
@@ -7,18 +7,17 @@ import ImageInput from "./components/ImageInput";
 import RadioInput from "./components/RadioInput";
 import ChainSelector from "./components/ChainSelector";
 import { media } from "@/shared/styles/media";
-import { Button } from "@mui/material";
+import { Button, ButtonBaseOwnProps, ButtonOwnProps } from "@mui/material";
 import SelectedChains from "./components/SelectedChains";
 import WalletList from "./components/WalletList";
 import WalletVotingPower from "./components/WalletVotingPower";
 import CreateDAO from "./components/CreateDAO";
-import { useLaunchPadForm } from "../../../launchpad/data/useLaunchPad"
 import { useNavigate } from "react-router-dom";
-import { LaunchPadFormData, LaunchPadFormSchema, LaunchpadRoutes } from '../../../launchpad/constants'
 import React, { Key, useEffect, useState } from "react";
 import { Container, Grid } from '@mui/material';
 import ERC20Item from './card';
 import { FormInputStyle } from "./styles/form";
+import { CommonProps } from "@mui/material/OverridableComponent";
 
 
 
@@ -56,16 +55,7 @@ export default function ICP20Standard() {
     
 
   const navigate = useNavigate();
-  const [formData, setFormData] = useLaunchPadForm();
 
-  const { control, handleSubmit } = useForm<LaunchPadFormData>({
-    defaultValues: formData,
-    resolver: zodResolver(LaunchPadFormSchema),
-  });
-
-  const onSubmit = (data: LaunchPadFormData) => {
-    setFormData(data);
-  };
  
   const [logo, setLogo] = useState("");
   const [name, setName] = useState("");
@@ -117,15 +107,16 @@ const fee = '5';
   
  
 
+  
+
   return (
 
     
 
-    <Form onSubmit={handleSubmit(onSubmit)}>
 
 
 
-  
+  <>
         <Section>
         
 
@@ -158,10 +149,10 @@ const fee = '5';
         <Section>
           <Title1>Functionality</Title1>
 
-          <FormInput name="Token Data" control={control} placeholder="Token Info" />
+          <FormInput name="Token Data"  placeholder="Token Info" />
 
         </Section>
-      </Form>
+      </>
   );
 }
 

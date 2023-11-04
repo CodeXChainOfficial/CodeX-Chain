@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import Button from "@mui/material/Button";
 import { useController } from "react-hook-form";
 import { InputProps } from "../types/form";
-import { LaunchPadFormData } from "@/pages/launchpad/constants";
 import { FormInputStyle } from "../styles/form";
 import { media } from "@/shared/styles/media";
 import useWatchLaunchPadType from "../hooks/useWatchLaunchPadType";
@@ -12,59 +11,8 @@ const WalletList = ({ control }: Pick<InputProps, "control">) => {
   const [count, setCount] = useState(1);
 
   const launchpadType = useWatchLaunchPadType({ control });
+}
 
-  const { field } = useController<LaunchPadFormData, "wallets">({
-    name: "wallets",
-    control,
-    defaultValue: [],
-  });
-
-  useEffect(() => {
-    if (launchpadType !== "centralized") return;
-
-    setCount(1);
-    field.onChange({ target: { value: [] } });
-  }, [launchpadType]);
-
-  const canAddMore = field.value.length >= count && launchpadType === "decentralized";
-
-  const handleChange = (value: string, index: number) => {
-    const wallets = [...field.value];
-    wallets[index] = value;
-    field.onChange({ target: { value: wallets.filter((w) => w) } });
-  };
-
-  const handleClick = () => {
-    if (canAddMore) setCount((prev) => ++prev);
-  };
-
-  const handleRemove = (index: number) => {
-    field.onChange({ target: { value: field.value.filter((_, i) => i !== index) } });
-    setCount((prev) => --prev);
-  };
-
-  if (launchpadType === "") return <></>;
-
-  return (
-    <Wrapper>
-      {new Array(count).fill(0).map((item, index) => (
-        <Group key={index + item}>
-          <Input value={field.value[index] ?? ""} onChange={(e) => handleChange(e.target.value, index)} />
-
-          <div className="button-group">
-            {launchpadType !== "centralized" && (
-              <StyledButton onClick={handleClick} disabled={!canAddMore}>
-                Add More
-              </StyledButton>
-            )}
-
-            {index > 0 && <RemoveButton onClick={() => handleRemove(index)}>Remove</RemoveButton>}
-          </div>
-        </Group>
-      ))}
-    </Wrapper>
-  );
-};
 
 const Wrapper = styled.div`
   display: grid;

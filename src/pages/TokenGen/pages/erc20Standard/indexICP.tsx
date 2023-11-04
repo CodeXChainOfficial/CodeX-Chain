@@ -11,9 +11,7 @@ import SelectedChains from "./components/SelectedChains";
 import WalletList from "./components/WalletList";
 import WalletVotingPower from "./components/WalletVotingPower";
 import CreateDAO from "./components/CreateDAO";
-import { useLaunchPadForm } from "../../../launchpad/data/useLaunchPad"
 import { useNavigate } from "react-router-dom";
-import { LaunchPadFormData, LaunchPadFormSchema, LaunchpadRoutes } from '../../../launchpad/constants'
 import React, { Key, useEffect, useState } from "react";
 import { Container, Grid } from '@mui/material';
 import ERC20Item from './card';
@@ -270,17 +268,7 @@ const DAOlist = () => {
 }
   
   const navigate = useNavigate();
-  const [formData, setFormData] = useLaunchPadForm();
-
-  const { control, handleSubmit } = useForm<LaunchPadFormData>({
-    defaultValues: formData,
-    resolver: zodResolver(LaunchPadFormSchema),
-  });
-
-  const onSubmit = (data: LaunchPadFormData) => {
-    setFormData(data);
-    navigate(LaunchpadRoutes.resultPath);
-  };
+  
   const [section, setSection] = useState('all'); // 'all' is the default section
 
 
@@ -307,7 +295,7 @@ const DAOlist = () => {
         <NavMenuItem onClick={() => handleSectionChange('marketplace')}>Marketplace</NavMenuItem>
       </NavMenu>
     
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <>
 
 
     {section === 'all' && (
@@ -453,7 +441,7 @@ const DAOlist = () => {
 </Element>
         </Element>
       )}
-      </Form></> 
+      </></> 
   );
 }
 

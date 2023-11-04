@@ -5,17 +5,25 @@ import "./index.css";
 import App from "./App";
 import Error from "./pages/error";
 import Home from "./pages/home";
-import Launchpad from "./pages/launchpad";
 import CreateTokenICP from "./pages/TokenGen/pages/erc20Standard/";
 import { AppRoutes } from "./shared/constants";
-import ERC20Standard from "./pages/TokenGen/pages/erc20Standard/ERC20Standard";
-import ERC20Advance from "./pages/TokenGen/pages/erc20Standard/ERC20Advance";
-import ERC20Drop from "./pages/TokenGen/pages/erc20Standard/ERC20Drop";
-import ERC20Dropvote from "./pages/TokenGen/pages/erc20Standard/ERC20Dropvote";
-import ERC20SignatureMint from "./pages/TokenGen/pages/erc20Standard/ERC20SignatureMint";
+// @ts-ignore
+import ERC20Standard from "./pages/TokenGen/pages/erc20Standard/ERC20Standard.jsx";
+// @ts-ignore
+import ERC20Advance from "./pages/TokenGen/pages/erc20Standard/ERC20Advance.jsx";
+// @ts-ignore
+import ERC20Drop from "./pages/TokenGen/pages/erc20Standard/ERC20Drop.jsx";
+// @ts-ignore
+import ERC20Dropvote from "./pages/TokenGen/pages/erc20Standard/ERC20Dropvote.jsx";
+// @ts-ignore
+import ERC20SignatureMint from "./pages/TokenGen/pages/erc20Standard/ERC20SignatureMint.jsx";
+// @ts-ignore
 import ERC20Vote from "./pages/TokenGen/pages/erc20Standard/ERC20Vote";
-import ERC20SignatureMintVote from "./pages/TokenGen/pages/erc20Standard/ERC20SignatureMintVote";
+// @ts-ignore
+import ERC20SignatureMintVote from "./pages/TokenGen/pages/erc20Standard/ERC20SignatureMintVote.jsx";
+// @ts-ignore
 import ERC20Staking from "./pages/TokenGen/pages/erc20Standard/ERC20Staking";
+import { ComponentType } from 'react';
 
 
 
@@ -28,7 +36,6 @@ const router = createBrowserRouter(
       <Route errorElement={<Error />}>
         <Route index element={<Home />} />
 
-        <Route path={AppRoutes.launchpad + "/*"} element={<Launchpad />} />
         <Route path={AppRoutes.icp + "/*"} element={<CreateTokenICP />} />
    
         <Route path={AppRoutes.ERC20Standard + "/*"} element={<ERC20Standard />} />
