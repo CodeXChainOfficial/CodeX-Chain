@@ -336,7 +336,7 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
           chainId: "0x6f70", // Ethereum Mainnet
           rpcUrl:
             "https://arbitrum-goerli.infura.io/v3/5f3224c8075b407fa38911977320235b",
-            logo: "/blockchains/arbritum.png", // Add the path to the Goerli logo
+            logo: "/blockchains/arbritrum.png", // Add the path to the Goerli logo
             nativeToken: "ETH", // Native token of Arbitrum
             faucet: "https://faucet.quicknode.com/arbitrum/goerli"
         },
@@ -978,7 +978,10 @@ const CounterWrapper = styled.div`
   border: 2px solid gray; /* Border color gray */
 `;
 
-
+const handleFaucetClick = (faucetUrl) => {
+  // Open a new window or redirect to the selected faucet URL
+  window.open(faucetUrl, '_blank');
+};
     
     
 
@@ -1073,7 +1076,7 @@ const CounterWrapper = styled.div`
 </Tabs>
 
       {activeTab === 'createToken' && (
-        <>
+        <><Form>
           <Title>ERC20 Drop</Title>
           <div>
             <Title1>Token Deployment</Title1>
@@ -1093,7 +1096,7 @@ const CounterWrapper = styled.div`
 
       />
           </div>
-        </>
+          </Form> </>
       )}
 
 {activeTab === 'myTokens' && (

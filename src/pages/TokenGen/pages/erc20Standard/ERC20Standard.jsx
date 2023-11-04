@@ -1043,7 +1043,10 @@ const CounterWrapper = styled.div`
 `;
 
 
-    
+const handleFaucetClick = (faucetUrl) => {
+  // Open a new window or redirect to the selected faucet URL
+  window.open(faucetUrl, '_blank');
+};
     
 
   return (
@@ -1137,7 +1140,7 @@ const CounterWrapper = styled.div`
 </Tabs>
 
       {activeTab === 'createToken' && (
-        <>
+        <><Form>
           <Title>ERC20 Standard</Title>
           <div>
             <Title1>Token Deployment</Title1>
@@ -1157,7 +1160,7 @@ const CounterWrapper = styled.div`
 
       />
           </div>
-        </>
+          </Form> </>
       )}
 
 {activeTab === 'myTokens' && (
