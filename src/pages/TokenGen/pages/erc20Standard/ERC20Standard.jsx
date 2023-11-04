@@ -401,7 +401,7 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
     const category = 'ERC20Standard'; // Replace with the desired category
     const walletAddress = userAddress; // Replace with the user's wallet address
     
-    axios.get(`https://code-x-chain-git-new-wefundofficial.vercel.app/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`https://code-x-chain-git-new-wefundofficial.vercel.app:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -498,7 +498,7 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
     const category = 'ERC20Standard'; // Replace with the desired category
     const walletAddress = await signer.getAddress(); // Replace with the user's wallet address
     
-    axios.get(`https://code-x-chain-git-new-wefundofficial.vercel.app/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`https://code-x-chain-git-new-wefundofficial.vercel.app:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -861,7 +861,7 @@ try{
 
  
 
-    axios.post('https://code-x-chain-git-new-wefundofficial.vercel.app/api/saveDeployedTokens', { deployedTokens: [newToken] })
+    axios.post('https://code-x-chain-git-new-wefundofficial.vercel.app:5004/api/saveDeployedTokens', { deployedTokens: [newToken] })
     .then(response => {
       console.log(response.data);
     })
@@ -872,7 +872,7 @@ try{
     const category = 'ERC20Standard'; // Replace with the desired category
     const walletAddress = await signer.getAddress(); // Replace with the user's wallet address
     
-    axios.get(`https://code-x-chain-git-new-wefundofficial.vercel.app/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`https://code-x-chain-git-new-wefundofficial.vercel.app:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -994,7 +994,7 @@ const TotalCountDisplay= () => {
     const fetchTotalCounts = async () => {
       try {
         // Replace this URL with the actual URL of your server
-        const apiUrl = 'https://code-x-chain-git-new-wefundofficial.vercel.app/api/getDeployedTokensCount';
+        const apiUrl = 'https://code-x-chain-git-new-wefundofficial.vercel.app:5004/api/getDeployedTokensCount';
 
         const response = await fetch(apiUrl);
         const data = await response.json();
