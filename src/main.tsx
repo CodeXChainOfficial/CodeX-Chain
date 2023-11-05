@@ -47,11 +47,7 @@ const router = createBrowserRouter(
         <Route path={AppRoutes.ERC20Vote + "/*"} element={<ERC20Vote />} />
         <Route path={AppRoutes.ERC20Staking + "/*"} element={<ERC20Staking />} />
 
-
-
-        
-
-
+      
 
         {/* <Route path="launchpad/*" element={<Launchpad />}>
           <Route index element={<CreateLaunchpad />} />
