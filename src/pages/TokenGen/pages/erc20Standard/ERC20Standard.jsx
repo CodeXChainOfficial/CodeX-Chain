@@ -95,8 +95,10 @@ export default function ERC20Standard() {
     const [selectedToken, setSelectedToken] = useState(null);
     const [selectedFunction, setSelectedFunction] = useState(null);
     const [deploymentStep, setDeploymentStep] = useState(0);
-    const [functionInputs, setFunctionInputs] = useState([]);
-const [functionOutputs, setFunctionOutputs] = useState([]);
+    const [functionInputs, setFunctionInputs] = useState([
+      { name: 'input1', type: 'uint256', value: 'test' },
+      // Add more inputs as needed
+    ]);const [functionOutputs, setFunctionOutputs] = useState([]);
       const handleSelectToken = (token, index) => {
         setSelectedTokenIndex(index);
         setSelectedToken(token);
@@ -124,10 +126,6 @@ const handleCallFunction = async () => {
     console.error('Selected token or token address is not defined.', selectedToken,selectedToken.taddress );
     return;
   }
-const infuraRpcUrl =
-"https://sepolia.infura.io/v3/40b6ee6a88f44480b3ae89b1183df7ed";
-
-const infuraProvider = new ethers.JsonRpcProvider(infuraRpcUrl);
 
 
 // Connect to MetaMask wallet
@@ -136,7 +134,7 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
   const abi =  MyTokenContractABI;
   const signer = await metaMaskProvider.getSigner();
   const provider = new ethers.BrowserProvider(window.ethereum);
-  const contract = new ethers.Contract(selectedToken.Taddress, abi, signer);
+  const contract = new ethers.Contract(selectedToken.taddress, abi, signer);
 
   try {
     // Ensure contractAddress and contractABI are defined
@@ -147,12 +145,20 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
 
     console.log('Selected Function Name:', selectedFunction.name);
     console.log('Contract ABI:', contract.interface.format());
-    console.log('TokenAddress:', selectedToken.Taddress);
+    console.log('TokenAddress:', selectedToken.taddress);
 
     if (contract && selectedFunction.name) {
       const args = functionInputs.map((input) => input.value);
+     // const args = selectedFunction.name
+console.log("args",args)
 
+if (args.some((arg) => arg === '')) {
+  console.error('Please provide values for all inputs.');
+  return;
+}
       try {
+
+        console.log("try", args)
         const result = await contract[selectedFunction.name](...args);
 
         console.log(result);
@@ -836,7 +842,9 @@ console.log("contract", signedTransaction);
 
 // Wait for the transaction to be mined
 const receipt = await signedTransaction.wait();
-const newContractAddress = (receipt , { contractAddress }).contractAddress;
+console.log("recipt",receipt)
+console.log("contractAddress",receipt.contractAddress)
+const newContractAddress = receipt.contractAddress;
 
 
 
@@ -1280,7 +1288,10 @@ const handleFaucetClick = (faucetUrl) => {
           value={input.value}
           onChange={(e) => {
             const newInputs = [...functionInputs];
+            console.log(newInputs)
             newInputs[index].value = e.target.value;
+            console.log(newInputs[index].value)
+
             setFunctionInputs(newInputs);
           }}
         />
