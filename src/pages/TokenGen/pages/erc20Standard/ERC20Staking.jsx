@@ -776,13 +776,16 @@ console.log("contract", signedTransaction);
 
 // Wait for the transaction to be mined
 const receipt = await signedTransaction.wait();
-const newContractAddress = (receipt , { contractAddress }).contractAddress;
+console.log("recipt",receipt)
+console.log("contractAddress",receipt.contractAddress)
+const newContractAddress = receipt.contractAddress;
 
 
 
 console.log("Contract Deployed:", deployedContract);
 console.log("Transaction Hash:", signedTransaction.hash);
 console.log("New Contract Address:", newContractAddress);
+  
   
 setDeploymentStep(5);
 try{
