@@ -1197,12 +1197,12 @@ const handleFaucetClick = (faucetUrl) => {
                       },
                     }}
                   >
-                    <TableCell>{token.name}</TableCell>
+                   <TableCell>{token.name}</TableCell>
                     <TableCell>{token.symbol}</TableCell>
                     <TableCell>{token.category}</TableCell>
-                    <TableCell>{token.walletAddress}</TableCell>
-                    <TableCell>{token.address}</TableCell>
-                    <TableCell>{token.transactionHash}</TableCell>
+                    <TableCell>{token.walletaddress}</TableCell>
+                    <TableCell>{token.taddress}</TableCell>
+                    <TableCell>{token.transactionhash}</TableCell>
 
                   </TableRow>
                 ))}

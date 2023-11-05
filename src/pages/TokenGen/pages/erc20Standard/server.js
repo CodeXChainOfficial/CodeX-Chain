@@ -76,18 +76,9 @@ app.get('/api/getDeployedTokens', async (req, res) => {
     let query = 'SELECT name, symbol, Taddress, walletAddress, category, "transactionHash" FROM LastToken';
     const params = [];
 
-    if (category && walletAddress) {
-      query += ' WHERE category = ? AND walletAddress = ?';
-      params.push(category, walletAddress);
-    } else if (category) {
-      query += ' WHERE category = ?';
-      params.push(category);
-    } else if (walletAddress) {
-      query += ' WHERE walletAddress = ?';
-      params.push(walletAddress);
-    }
 
-    const storedTokens = await db.all(query, params);
+    const result = await client.query(query, params);
+    const storedTokens = result.rows;
 
     if (storedTokens.length === 0) {
       // No tokens found
@@ -101,6 +92,7 @@ app.get('/api/getDeployedTokens', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error retrieving tokens.' });
   }
 });
+
 
 app.get('/api/getDeployedTokensCount', async (req, res) => {
   try {
