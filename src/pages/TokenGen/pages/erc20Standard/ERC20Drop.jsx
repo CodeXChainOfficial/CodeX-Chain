@@ -398,7 +398,7 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
     const category = 'ERC20Drop'; // Replace with the desired category
     const walletAddress = userAddress; // Replace with the user's wallet address
     
-    axios.get(`http://localhost:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`https://myapi-nboa.vercel.app/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -487,7 +487,7 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
     const category = 'ERC20Drop'; // Replace with the desired category
     const walletAddress = await signer.getAddress(); // Replace with the user's wallet address
     
-    axios.get(`http://localhost:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`https://myapi-nboa.vercel.app/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -797,7 +797,7 @@ try{
 
  
 
-    axios.post('http://localhost:5004/api/saveDeployedTokens', { deployedTokens: [newToken] })
+    axios.post('https://myapi-nboa.vercel.app/api/saveDeployedTokens', { deployedTokens: [newToken] })
     .then(response => {
       console.log(response.data);
     })
@@ -808,7 +808,7 @@ try{
     const category = 'ERC20Drop'; // Replace with the desired category
     const walletAddress = await signer.getAddress(); // Replace with the user's wallet address
     
-    axios.get(`http://localhost:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`https://myapi-nboa.vercel.app/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -930,7 +930,7 @@ const TotalCountDisplay= () => {
     const fetchTotalCounts = async () => {
       try {
         // Replace this URL with the actual URL of your server
-        const apiUrl = 'http://localhost:5004/api/getDeployedTokensCount';
+        const apiUrl = 'https://myapi-nboa.vercel.app/api/getDeployedTokensCount';
 
         const response = await fetch(apiUrl);
         const data = await response.json();
