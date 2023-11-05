@@ -116,8 +116,8 @@ const handleCallFunction = async () => {
   setLoading(true);
 
 
-  if (!selectedToken || !selectedToken.Taddress) {
-    console.error('Selected token or token address is not defined.', selectedToken,selectedToken.Taddress );
+ if (!selectedToken || !selectedToken.taddress) {
+    console.error('Selected token or token address is not defined.', selectedToken,selectedToken.taddress );
     return;
   }
 const infuraRpcUrl =
