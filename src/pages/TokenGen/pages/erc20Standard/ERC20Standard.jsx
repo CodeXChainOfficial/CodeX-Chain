@@ -401,7 +401,7 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
     const category = 'ERC20Standard'; // Replace with the desired category
     const walletAddress = userAddress; // Replace with the user's wallet address
     
-    axios.get(`postgres://postgres:1CCf63d-c25c3dgff1Cab6F2A5*C5cFC@roundhouse.proxy.rlwy.net:38917/railwayapi/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`http://localhost:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -498,7 +498,7 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
     const category = 'ERC20Standard'; // Replace with the desired category
     const walletAddress = await signer.getAddress(); // Replace with the user's wallet address
     
-    axios.get(`postgres://postgres:1CCf63d-c25c3dgff1Cab6F2A5*C5cFC@roundhouse.proxy.rlwy.net:38917/railwayapi/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`http://localhost:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -861,7 +861,7 @@ try{
 
  
 
-    axios.post('postgres://postgres:1CCf63d-c25c3dgff1Cab6F2A5*C5cFC@roundhouse.proxy.rlwy.net:38917/railwayapi/saveDeployedTokens', { deployedTokens: [newToken] })
+    axios.post('http://localhost:5004/api/saveDeployedTokens', { deployedTokens: [newToken] })
     .then(response => {
       console.log(response.data);
     })
@@ -872,7 +872,7 @@ try{
     const category = 'ERC20Standard'; // Replace with the desired category
     const walletAddress = await signer.getAddress(); // Replace with the user's wallet address
     
-    axios.get(`postgres://postgres:1CCf63d-c25c3dgff1Cab6F2A5*C5cFC@roundhouse.proxy.rlwy.net:38917/railwayapi/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
+    axios.get(`http://localhost:5004/api/getDeployedTokens?category=${category}&walletAddress=${walletAddress}`)
       .then(response => {
         const storedTokens = response.data.deployedTokens;
         console.log(storedTokens);
@@ -994,7 +994,7 @@ const TotalCountDisplay= () => {
     const fetchTotalCounts = async () => {
       try {
         // Replace this URL with the actual URL of your server
-        const apiUrl = 'postgres://postgres:1CCf63d-c25c3dgff1Cab6F2A5*C5cFC@roundhouse.proxy.rlwy.net:38917/railwayapi/getDeployedTokensCount';
+        const apiUrl = 'http://localhost:5004/api/getDeployedTokensCount';
 
         const response = await fetch(apiUrl);
         const data = await response.json();
