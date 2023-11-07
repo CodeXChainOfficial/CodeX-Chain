@@ -93,87 +93,92 @@ export default function ERC20SignatureMint() {
     const [deploymentStep, setDeploymentStep] = useState(0);
     const [functionInputs, setFunctionInputs] = useState([]);
 const [functionOutputs, setFunctionOutputs] = useState([]);
-      const handleSelectToken = (token, index) => {
-        setSelectedTokenIndex(index);
-        setSelectedToken(token);
-        setSelectedFunction(null); // Reset selected function when a new token is selected
-        setFunctionInputs([]); // Reset function inputs
-        setFunctionOutputs([]); // Reset function outputs
-      };
+const handleSelectToken = (token, index) => {
+  setSelectedTokenIndex(index);
+  setSelectedToken(token);
+  setSelectedFunction(null); // Reset selected function when a new token is selected
+  setFunctionInputs([]); // Reset function inputs
+  setFunctionOutputs([]); // Reset function outputs
+  handleOpenTokenFunctionalityModal();
+
+};
     
   
-      const handleSelectFunction = (func) => {
-        setSelectedFunction(func);
-        setFunctionInputs(func.inputs.map((input) => ({ name: input.name, type: input.type, value: '' })));
-        setFunctionOutputs([]);
-      
-      
-      };
-      const [loading, setLoading] = useState(false);
+const handleSelectFunction = (func) => {
+  setSelectedFunction(func);
+  setFunctionInputs(func.inputs.map((input) => ({ name: input.name, type: input.type, value: '' })));
+  setFunctionOutputs([]);
+
+
+};
+const [loading, setLoading] = useState(false);
 
 const handleCallFunction = async () => {
-  
-  setLoading(true);
+
+setLoading(true);
 
 
- if (!selectedToken || !selectedToken.taddress) {
-    console.error('Selected token or token address is not defined.', selectedToken,selectedToken.taddress );
-    return;
-  }
-const infuraRpcUrl =
-"https://sepolia.infura.io/v3/40b6ee6a88f44480b3ae89b1183df7ed";
-
-const infuraProvider = new ethers.JsonRpcProvider(infuraRpcUrl);
+if (!selectedToken || !selectedToken.taddress) {
+console.error('Selected token or token address is not defined.', selectedToken,selectedToken.taddress );
+return;
+}
 
 
 // Connect to MetaMask wallet
 await window.ethereum.enable();
 const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
-  const abi =  MyTokenContractABI;
-  const signer = await metaMaskProvider.getSigner();
-  const provider = new ethers.BrowserProvider(window.ethereum);
-  const contract = new ethers.Contract(selectedToken.Taddress, abi, signer);
+const abi =  MyTokenContractABI;
+const signer = await metaMaskProvider.getSigner();
+const provider = new ethers.BrowserProvider(window.ethereum);
+const contract = new ethers.Contract(selectedToken.taddress, abi, signer);
 
-  try {
-    // Ensure contractAddress and contractABI are defined
-    if (!contract || !abi) {
-      console.error('Contract address or ABI is not defined.');
-      return;
-    }
+try {
+// Ensure contractAddress and contractABI are defined
+if (!contract || !abi) {
+console.error('Contract address or ABI is not defined.');
+return;
+}
+console.log('Selected Function Name:', selectedFunction.name);
+console.log('Contract ABI:', contract.interface.format());
+console.log('TokenAddress:', selectedToken.taddress);
 
-    console.log('Selected Function Name:', selectedFunction.name);
-    console.log('Contract ABI:', contract.interface.format());
-    console.log('TokenAddress:', selectedToken.Taddress);
+if (contract && selectedFunction.name) {
+const args = functionInputs.map((input) => input.value);
+// const args = selectedFunction.name
+console.log("args",args)
 
-    if (contract && selectedFunction.name) {
-      const args = functionInputs.map((input) => input.value);
+if (args.some((arg) => arg === '')) {
+console.error('Please provide values for all inputs.');
+return;
+}
+try {
 
-      try {
-        const result = await contract[selectedFunction.name](...args);
+  console.log("try", args)
+  const result = await contract[selectedFunction.name](...args);
 
-        console.log(result);
-       setFunctionOutputs([{
-  name: selectedFunction.name,
-  value: result !== undefined ? result : 'N/A',
-  // Assuming you want to keep the type from the selectedFunction.outputs
-  type: selectedFunction.outputs.length > 0 ? selectedFunction.outputs[0].type : 'N/A',
+  console.log(result);
+ await setFunctionOutputs([{
+name: selectedFunction.name,
+value: result !== undefined ? result : 'N/A',
+// Assuming you want to keep the type from the selectedFunction.outputs
+type: selectedFunction.outputs.length > 0 ? selectedFunction.outputs[0].type : 'N/A',
 }]);
-        
-        console.log('Outputs:', outputs);
+  
+  console.log('Outputs:', result);
 
-        setFunctionOutputs(outputs);
-      } catch (error) {
-        console.error('Error calling function:', error);
-      }
-    }
-  } catch (error) {
-    console.error('Error creating contract instance:', error);
-  }
+//  setFunctionOutputs(result);
+} catch (error) {
+  console.error('Error calling function:', error);
+}
+}
+} catch (error) {
+console.error('Error creating contract instance:', error);
+}
 };
- 
 
 
-  const contractAddress = selectedToken ? selectedToken.address : null;
+
+const contractAddress = selectedToken ? selectedToken.address : null;
 
   useEffect(() => {
     if (web3 && abiArray) {
@@ -512,6 +517,112 @@ const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
       </div>
     );
   };
+  const Modal2 = ({ isOpen, onClose, content }) => {
+
+
+   
+    return (
+      <div
+        style={{
+          display: isOpen ? 'flex' : 'none',
+          position: 'fixed',
+          top: 20,
+          left: 0,
+          width: '100%',
+          height: '100%',
+
+          overflow: 'auto', // Add scroll when content exceeds the maximum height
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 999,
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: '#1a1a1a',
+            padding: '20px',
+            borderRadius: '8px',
+            width: 'auto',
+            height: '80%',
+            color: '#fff',
+            border: '1px solid rgba(222, 222, 222, 0.5)',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+            overflow: 'auto', // Add this line to enable scroll if content is too big
+
+            
+          }}
+        >
+          {content}
+          <div style={{ marginTop: '20px', marginLeft:'30px', display: 'block', justifyContent: 'block-end' }}>
+            <button
+              style={{
+                color: '#fff',
+                background: '#3498db',
+                border: 'none',
+                padding: '8px 15px',
+
+                borderRadius: '4px',
+                cursor: 'pointer',
+                marginRight: '30px',
+                display: 'flex',
+            flexDirection: 'row',
+              }}
+              onClick={onClose}
+            >
+              Close
+            </button>
+           
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+
+  const ErrorModal = ({ open, onClose }) => {
+    return (
+      <div style={{ display: open ? 'block' : 'none', position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.2)', backdropFilter: 'blur(8px)', zIndex: 999, borderRadius: '8px' }}>
+        
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(36, 36, 36, 1)', padding: '20px', borderRadius: '8px', maxWidth: '400px', color: '#fff' }}>
+          {/* Modal content */}
+          <Button
+            variant="outlined"
+            color="primary"
+            alignItems="right"
+position="right"
+
+            
+            onClick={() => {
+              
+              onClose(); // Close the modal
+            }}
+          >
+            X
+          </Button>
+          <Title1 id="modal-modal-title" variant="h6" component="h2">
+            Add the chain in MetaMask
+          </Title1>
+          <h3 id="modal-modal-description" sx={{ mt: 2 }}>
+            You can add the chain in MetaMask using the following link:
+          </h3>
+         <br></br>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              window.open('https://chainlist.org/?search=', '_blank');
+              onClose(); // Close the modal
+            }}
+          >
+            Add Chain
+          </Button>
+         
+        </div>
+      </div>
+    );
+  };
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
@@ -980,12 +1091,69 @@ const CounterWrapper = styled.div`
   border: 2px solid gray; /* Border color gray */
 `;
 
+const [isTokenFunctionalityModalOpen, setIsTokenFunctionalityModalOpen] = useState(false);
 
 const handleFaucetClick = (faucetUrl) => {
   // Open a new window or redirect to the selected faucet URL
   window.open(faucetUrl, '_blank');
 };
     
+    
+const handleOpenTokenFunctionalityModal = (token) => {
+  setIsTokenFunctionalityModalOpen(true);
+};
+
+// Function to close the modal
+const handleCloseTokenFunctionalityModal = () => {
+  setIsTokenFunctionalityModalOpen(false);
+};
+    
+
+const callContractFunction = async ( functionName, inputs) => {
+ console.log (functionName)
+
+  await window.ethereum.enable();
+  const metaMaskProvider = new ethers.BrowserProvider(window.ethereum);
+    const abi =  MyTokenContractABI;
+    const signer = await metaMaskProvider.getSigner();
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const contract = new ethers.Contract(selectedToken.taddress, abi, signer);
+  
+ console.log(abi,signer,contract)
+  try {
+console.log(functionName.name)
+const functname= functionName.name
+if (inputs.length === 0) {
+ 
+    const result = await contract[functname](...inputs);
+console.log(result);
+   // const result = await contract.methods[functionName](...inputs).call();
+    return result;
+  }} catch (error) {
+    throw error;
+  }
+};
+
+
+const formatOutput = (output) => {
+  if (typeof output === 'object' && output.toHexString) {
+    // If output is a BigNumber, convert it to a string
+    return output.toHexString();
+  }
+  // Handle other data types or just return the output as is
+  return String(output);
+};
+
+
+const maxLength = 20; // Set your desired maximum length
+
+// Function to truncate and add "..." if necessary
+const truncateString = (str) =>
+  str.length > maxLength ? `${str.substring(0, maxLength)}...` : str;
+
+
+
+
 
   return (
 
@@ -1086,11 +1254,9 @@ const handleFaucetClick = (faucetUrl) => {
         <Input type="text" placeholder="Name" value={name}   onChange={(e) => handleInputChange(e, setName)}
  />
 <Input type="text" placeholder="Symbol" value={symbol} onChange={(e) => handleInputChange(e, setSymbol)} />
-<Input type="number" placeholder="Total Supply" value={totalSupply} onChange={(e) => handleInputChange(e, setTotalSupply)} />
-<Input type="number" placeholder="Decimals" value={decimals} onChange={(e) => handleInputChange(e, setDecimals)} /> </Wrapper>
+ </Wrapper>
         <Submit onClick={deployToken}>Deploy</Submit>
-
-            <Modal
+        <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         content={getStepContent()}
@@ -1158,59 +1324,80 @@ const handleFaucetClick = (faucetUrl) => {
         </div>
 
         {selectedTokenIndex !== null && selectedToken && (
-          <div>
-            {/* Functionality related to the selected token */}
-            <div>
-              <Title>Functionality of <Title1>{selectedToken.name}</Title1></Title>
-              {/* Display read functions */}
-              <Tabs value={selectedTab} onChange={(e, newValue) => setSelectedTab(newValue)}>
-                <Tab label="Write" />
-                <Tab label="Read" />
-                <Tab label="Input" />
-              </Tabs>
+          <div >
 
-              {selectedTab === 0 && (
-                <div>
-                  <Title>Write Functions</Title>
-                  {abiArray
-                    .filter((func) => func.stateMutability === 'nonpayable')
-                    .map((func, index) => (
-                      <Button key={index} onClick={() => handleSelectFunction(func)}>
-                      {func.name}
-                      </Button>
-                    ))}
-                </div>
-              )}
-            {selectedTab === 1 && (
-              <div>
-                {/* Display read functions */}
-                <Title>Read Functions</Title>
-                {abiArray
-                  .filter((func) => func.stateMutability === 'view')
-                  .map((func, index) => (
-                    <Button key={index} onClick={() => handleSelectFunction(func)}>
-                    {func.name}
-                  </Button>
-                  ))}
-              </div>
-            )}
-            {selectedTab === 2 && (
-              <div>
-              <Title>EVENT Functions</Title>
+<Modal2
+          isOpen={isTokenFunctionalityModalOpen}
+          onClose={handleCloseTokenFunctionalityModal}
+    
+          content={
+<div>
+
+
+     
+        <Title1>Functionality of {selectedToken.name}</Title1>
+    
+        <div>
+          <Button onClick={() => setSelectedTab(0)}>Write</Button>
+          <Button onClick={() => setSelectedTab(1)}>Read</Button>
+          <Button onClick={() => setSelectedTab(2)}>Input</Button>
+        </div>
+
+        {/* Render the content based on the selected tab */}
+        <div style={{ display: 'flex' }}>
+  {/* Left side - Functionality and Buttons */}
+  <div style={{ marginRight: '20px' }}></div>
+        {selectedTab === 0 && (
+          <div>
+            <Title>Write Functions</Title>
+            {/* Display write functions */}
             {abiArray
-              .filter((func) => func.type === 'event')
+              .filter((func) => func.stateMutability === 'nonpayable')
               .map((func, index) => (
+                <div key={index} >
                 <Button key={index} onClick={() => handleSelectFunction(func)}>
                   {func.name}
                 </Button>
-              ))}</div>
-            )}
+                </div>
+              ))}
+          </div>
+        )}
+ {selectedTab === 1 && (
+  <div>
+    <Title>Read Functions</Title>
+    {/* Display read functions with results */}
+    {abiArray
+      .filter((func) => func.stateMutability === 'view')
+      .map((func, index) => (
+        <div key={index} >
+         <Button key={index} onClick={() => handleSelectFunction(func)}>
+                  {func.name}
+                </Button>
+        
+        </div>
+      ))}
+  </div>
+)}
 
-            {selectedFunction && (
-              <div>
-                {/* Display selected function inputs */}
-                <Title>Function Inputs <Title1>{selectedFunction.name}</Title1></Title>
-    {functionInputs.map((input, index) => (
+        {selectedTab === 2 && (
+          <div>
+            <Title>Inputs</Title>
+            {/* Display event functions */}
+            {abiArray
+              .filter((func) => func.type === 'event')
+              .map((func, index) => (
+                <div key={index} >
+                <Button key={index} onClick={() => handleSelectFunction(func)}>
+                  {func.name}
+                </Button>
+                </div>
+              ))}
+          </div>
+        )}
+<div>
+        {/* Display selected function inputs */}
+        <Title>Function Inputs {selectedFunction && selectedFunction.name}</Title>
+        {functionInputs.map((input, index) => (
       <div key={index}>
         <Input
           type="text"
@@ -1224,29 +1411,69 @@ const handleFaucetClick = (faucetUrl) => {
         />
       </div>
     ))}
-    <Button onClick={handleCallFunction}>Call Function</Button>
-    {functionOutputs.length > 0 && (
-  <div>
-    <Title1>Function Outputs {selectedFunction.name}</Title1>
-    <div>
-      <p>
-        {selectedFunction.name}: {String(functionOutputs[0]?.value)}
-      </p>
-    </div>
-  </div>
-)}
-  </div>
-)}
-          </div>
-        </div>
-      )}
+        <Button onClick={handleCallFunction}>Call Function</Button>
 
+        {/* Display function outputs if available */}
+        {functionOutputs.length > 0 && (
+          <div>
+            <Title1>Function Outputs {selectedFunction.name}</Title1>
+            <div>
+              <p>
+
+{typeof functionOutputs[0]?.value === 'object' ? (
+  <div>
+  Hash:<br />
+  <span title={functionOutputs[0]?.value?.hash}>
+    {truncateString(functionOutputs[0]?.value?.hash)}
+  </span>
+  <br />
+  From:<br />
+  <span title={functionOutputs[0]?.value?.from}>
+    {truncateString(functionOutputs[0]?.value?.from)}
+  </span>
+  <br />
+  To:<br />
+  <span title={functionOutputs[0]?.value?.to}>
+    {truncateString(functionOutputs[0]?.value?.to)}
+  </span>
+</div>
+
+
+
+) : (
+  <div>
+    {selectedFunction.name}: {String(functionOutputs[0]?.value)}
+  </div>
+)}
+        <br />
+              
+              
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+      </div>
+
+      </div>
+        }></Modal2>
+        </div>
+        )}
       {/* Display pagination controls */}
  
     </>
   </>
       )}
-  </ThemeProvider></>
+
+
+  </ThemeProvider>
+  
+  {errorModalOpen && (
+  <ErrorModal
+    open={errorModalOpen}
+    onClose={handleClose}
+  />
+)}</>
       
   ); 
 }
@@ -1283,6 +1510,7 @@ margin-block-start: 30px;
 }
 
 `;
+
 const StyledSelect = styled(Select)`
 display: flex;
 min-width: 200px;
@@ -1295,7 +1523,6 @@ font-size:  16px;
   letter-spacing: 1px;
 
 `;
-
 
 
 const Title = styled.h1`
