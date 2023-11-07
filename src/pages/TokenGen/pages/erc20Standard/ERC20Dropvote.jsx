@@ -1157,15 +1157,25 @@ const truncateString = (str) =>
 
 
     
-
-  return (
+ return (
 
     <>    <ThemeProvider theme={darkTheme}>
     <CssBaseline />
     <Form>
+
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+  <Title1>Select Network</Title1>
+<Button
+  id="demo-simple-select-label"
+  style={{ alignSelf: 'flex-end' }}
+  onClick={() => window.open('https://no-code-dapp-4ydf.vercel.app/TokengeneratorERC', '_blank')}
+>
+  Back
+</Button></div>
+
     <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginLeft: '20px' }}>
     <div>
-      <Title1>Select Network</Title1>
+
       <FormControl sx={{ m: 1, minWidth: 100 }}>
         <InputLabel id="demo-simple-select-label">Select:</InputLabel>
         <Select
@@ -1183,7 +1193,7 @@ const truncateString = (str) =>
 
     {selectedNetwork === 'mainnet' && (
       <div>
-                <Title1>.</Title1>
+                
 
         <FormControl sx={{ m: 1, minWidth: 80 }}>
           <InputLabel id="demo-simple-select-label">Select mainnet</InputLabel>
@@ -1205,7 +1215,6 @@ const truncateString = (str) =>
 
     {selectedNetwork === 'testnet' && (
       <div>
-        <Title1>.</Title1>
         <FormControl sx={{ m: 1, minWidth: 80 }}>
           <InputLabel id="demo-simple-select-label">Select testnet</InputLabel>
           <StyledSelect
@@ -1339,7 +1348,7 @@ const truncateString = (str) =>
 
 
      
-        <Title1>Functionality of {selectedToken.name}</Title1>
+        <Title1>Functions: {selectedToken.name}</Title1>
     
         <div>
           <Button onClick={() => setSelectedTab(0)}>Write</Button>

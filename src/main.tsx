@@ -23,6 +23,8 @@ import ERC20Vote from "./pages/TokenGen/pages/erc20Standard/ERC20Vote";
 import ERC20SignatureMintVote from "./pages/TokenGen/pages/erc20Standard/ERC20SignatureMintVote.jsx";
 // @ts-ignore
 import ERC20Staking from "./pages/TokenGen/pages/erc20Standard/ERC20Staking";
+// @ts-ignore
+import ICP20Standard from "./pages/TokenGen/pages/erc20Standard/ICP20Standard";
 import { ComponentType } from 'react';
 
 
@@ -46,6 +48,7 @@ const router = createBrowserRouter(
         <Route path={AppRoutes.ERC20SignatureMintVote + "/*"} element={<ERC20SignatureMintVote />} />
         <Route path={AppRoutes.ERC20Vote + "/*"} element={<ERC20Vote />} />
         <Route path={AppRoutes.ERC20Staking + "/*"} element={<ERC20Staking />} />
+        <Route path={AppRoutes.ICP20Standard + "/*"} element={<ICP20Standard />} />
 
       
 

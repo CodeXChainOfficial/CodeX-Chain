@@ -6,7 +6,6 @@ import FormTextarea from "./components/FormTextarea";
 import ImageInput from "./components/ImageInput";
 import RadioInput from "./components/RadioInput";
 import ChainSelector from "./components/ChainSelector";
-import { media } from "@/shared/styles/media";
 import { Button, ButtonBaseOwnProps, ButtonOwnProps } from "@mui/material";
 import SelectedChains from "./components/SelectedChains";
 import WalletList from "./components/WalletList";
@@ -180,9 +179,7 @@ const Section = styled.section`
   padding: 30px 32px;
   background: var(--black2);
 
-  ${media.sm} {
-    padding-inline: 10px;
-  }
+
 `;
 
 const Title = styled.h1`

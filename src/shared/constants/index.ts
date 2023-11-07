@@ -14,5 +14,4 @@ export const AppRoutes = {
   ERC20Staking:"ERC20Staking",
 
 
-
 } as const;

@@ -361,7 +361,7 @@ if (args.some((arg) => arg === '')) {
           chainId: "0x6f70", // Ethereum Mainnet
           rpcUrl:
             "https://arbitrum-goerli.infura.io/v3/5f3224c8075b407fa38911977320235b",
-            logo: "/blockchains/arbritum.png", // Add the path to the Goerli logo
+            logo: "/blockchains/arbritrum.png", // Add the path to the Goerli logo
             nativeToken: "ETH", // Native token of Arbitrum
             faucet: "https://faucet.quicknode.com/arbitrum/goerli"
         },
@@ -1302,7 +1302,7 @@ console.log("function and function input", functionInputs )
           <div>
             <Title1>Token Deployment</Title1>
         <Wrapper>
-        <Input type="text" placeholder="Inputtext" value={textinput}   onChange={(e) => handleInputChange(e, setInputtext)}
+        <Input type="text" placeholder="Inputtext" value={textinput}   onChange={(e) => handleInputChange(e, setInputtext)} />
 
         <Input type="text" placeholder="Name" value={name}   onChange={(e) => handleInputChange(e, setName)}
  />
