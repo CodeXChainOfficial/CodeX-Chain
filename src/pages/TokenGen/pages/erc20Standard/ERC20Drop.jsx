@@ -1167,10 +1167,12 @@ const truncateString = (str) =>
 <Button
   id="demo-simple-select-label"
   style={{ alignSelf: 'flex-end' }}
-  onClick={() => window.open('https://no-code-dapp-4ydf.vercel.app/TokengeneratorERC', '_blank')}
+ 
+  onClick={() => (window.location.href = 'https://no-code-dapp-4ydf.vercel.app/TokengeneratorERC')}
 >
   Back
 </Button></div>
+
 
     <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginLeft: '20px' }}>
     <div>

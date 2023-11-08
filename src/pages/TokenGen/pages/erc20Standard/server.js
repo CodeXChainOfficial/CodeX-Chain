@@ -1,49 +1,100 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
 import cors from 'cors';
+import pkg from 'pg';
+
 const app = express();
 const port = 5004;
 
 app.use(express.json());
 app.use(cors());
-app.use(bodyParser.json()); 
-// Create a new token
+app.use(bodyParser.json());
 
+const DATABASE_URL = process.env.DATABASE_URL || 'postgres://postgres:1CCf63d-c25c3dgff1Cab6F2A5*C5cFC@roundhouse.proxy.rlwy.net:38917/railway';
+const { Client } = pkg;
 
+const client = new Client({
+  connectionString: DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
-let db;
+async function connectToDatabase() {
+  try {
+    await client.connect();
+    console.log('Connected to PostgreSQL database');
+  } catch (error) {
+    console.error('Error connecting to PostgreSQL database:', error);
+  }
+}
 
+connectToDatabase();
 
-
+// Check if the LastToken table exists and create it if not
 async function initDatabase() {
-  db = await open({
-    filename: './database.sqlite',
-    driver: sqlite3.Database,
-  });
-
-  // Check if the newToken table exists
-  const tableExists = await db.get('SELECT name FROM sqlite_master WHERE type = "table" AND name = "LastToken"');
-
-  if (!tableExists) {
-    // Create the newToken table if it does not exist
-    await db.exec(`
-      CREATE TABLE LastToken (
-        name TEXT,
-        symbol TEXT,
-        Taddress TEXT,
-        walletAddress TEXT,
-        category TEXT,
-        transactionHash TEXT
+  try {
+    const result = await client.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables
+        WHERE table_name = 'LastToken'
       );
     `);
+
+    const tableExists = result.rows[0].exists;
+
+    if (!tableExists) {
+      // Create the LastToken table if it does not exist
+      await client.query(`
+        CREATE TABLE LastToken (
+          name TEXT,
+          symbol TEXT,
+          Taddress TEXT,
+          walletAddress TEXT,
+          category TEXT,
+          transactionHash TEXT
+        );
+      `);
+
+      console.log('LastToken table created');
+    }
+  } catch (error) {
+    console.error('Error initializing database:', error);
   }
 }
 
 
-initDatabase();
+try {
+  const result = await client.query(`
+    SELECT EXISTS (
+      SELECT FROM information_schema.tables
+      WHERE table_name = 'ICPTokens2'
+    );
+  `);
 
+  const tableExists = result.rows[0].exists;
+
+  if (!tableExists) {
+    // Create the LastToken table if it does not exist
+    await client.query(`
+      CREATE TABLE ICPTokens2 (
+        logo TEXT,
+        name TEXT,
+        symbol TEXT,
+        decimals TEXT,
+        totalsupply TEXT,
+        fee TEXT
+      );
+    `);
+
+    console.log('ICPTokens2 table created');
+  }
+} catch (error) {
+  console.error('Error initializing database ICPTokens:', error);
+}
+
+
+initDatabase();
 
 // API endpoint to save deployed tokens
 app.post('/api/saveDeployedTokens', async (req, res) => {
@@ -51,9 +102,15 @@ app.post('/api/saveDeployedTokens', async (req, res) => {
   console.log('Received request at post /api/saveDeployedTokens');
 
   try {
-    // Assuming deployedTokens is an array of objects with name, symbol, tokenAddress, walletAddress, and category properties
     for (const token of deployedTokens) {
-      await db.run('INSERT INTO LastToken VALUES (?, ?, ?, ?, ?, ?)', [token.name, token.symbol, token.Taddress, token.walletAddress, token.category, token.transactionHash]);
+      await client.query('INSERT INTO LastToken VALUES ($1, $2, $3, $4, $5, $6)', [
+        token.name,
+        token.symbol,
+        token.Taddress,
+        token.walletAddress,
+        token.category,
+        token.transactionHash,
+      ]);
     }
 
     res.json({ success: true, message: 'Tokens saved successfully.' });
@@ -64,7 +121,6 @@ app.post('/api/saveDeployedTokens', async (req, res) => {
 });
 
 // API endpoint to get deployed tokens based on category and walletAddress
-// API endpoint to get deployed tokens based on category and walletAddress
 app.get('/api/getDeployedTokens', async (req, res) => {
   const { category, walletAddress } = req.query;
 
@@ -73,9 +129,19 @@ app.get('/api/getDeployedTokens', async (req, res) => {
     console.log('Received request at get /api/getDeployedTokens');
     console.log('Request query:', req.query);
 
-    let query = 'SELECT name, symbol, Taddress, walletAddress, category, "transactionHash" FROM LastToken';
+    let query = 'SELECT name, symbol, Taddress, walletAddress, category, "transactionhash" FROM LastToken    ';
     const params = [];
 
+    if (category && walletAddress) {
+      query += ' WHERE category = $1 AND walletAddress = $2';
+      params.push(category, walletAddress);
+    } else if (category) {
+      query += ' WHERE category = $1';
+      params.push(category);
+    } else if (walletAddress) {
+      query += ' WHERE walletAddress = $2';
+      params.push(walletAddress);
+    }
 
     const result = await client.query(query, params);
     const storedTokens = result.rows;
@@ -96,39 +162,50 @@ app.get('/api/getDeployedTokens', async (req, res) => {
 
 app.get('/api/getDeployedTokensCount', async (req, res) => {
   try {
-    // Query the newToken database to get the count of tokens
-    const newTokenQuery = 'SELECT COUNT(*) as count FROM newToken';
-    const newTokenCount = await db.get(newTokenQuery);
+    const result = await client.query('SELECT COUNT(*) as count FROM LastToken');
+    const lasttokensCount = result.rows[0].count;
 
-    // Query the tokens database to get the count of tokens
-    // Replace 'tokens' with the actual name of your tokens table
-    const tokensQuery = 'SELECT COUNT(*) as count FROM tokens';
-    const tokensCount = await db.get(tokensQuery);
-
-    const lasttokensQuery = 'SELECT COUNT(*) as count FROM LastToken';
-    const lasttokensCount = await db.get(lasttokensQuery);
-
-    // Calculate the total count
-    const totalCount = newTokenCount.count + tokensCount.count + lasttokensCount.count;
-
-    res.json({ success: true, tokensCount: totalCount });
+    res.json({ success: true, tokensCount: lasttokensCount });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Error retrieving token count.' });
   }
 });
-/*
-app.post('/api/createToken', (req, res) => {
 
-  console.log('server create token');
-  const newTokenData = req.body;
-  createToken(newTokenData);
-  console.log('server created token');
 
-  executeBash();
-  console.log('server executed token');
 
-  res.json({ message: 'Token creation initiated' });
+
+
+
+app.post('/api/createToken', async (req, res) => {
+
+
+  const deploy = req.body.deployedTokens;
+  console.log('Received request at post /api/createToken');
+
+  try {
+    for (const token of deploy) {
+      await client.query('INSERT INTO ICPTokens2 VALUES ($1, $2, $3, $4, $5, $6)', [
+        token.logo,
+        token.name,
+        token.symbol,
+        token.decimals,
+        token.totalsupply,
+        token.fee
+      ]);
+    }
+    res.json({ success: true, message: 'Tokens saved successfully.' });
+
+  }catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error saving tokens.' });
+  }
+
+ executeBash();
+
+ res.json({ message: 'Token creation initiated' });
+
+
 });
 
 let storedCanisterInfo = null;
@@ -151,7 +228,7 @@ const Token = mongoose.model('Token', tokenSchema);
 
 // ... (previous code)*/
 
-/*
+
 
 app.post('/api/scriptInfo', (req, res) => {
   const { canisterInfo } = req.body;
@@ -201,7 +278,22 @@ app.get("/indexICP", (req, res) => {
   res.send("Hello ICP Page"); // Respond to the request
 });
 
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

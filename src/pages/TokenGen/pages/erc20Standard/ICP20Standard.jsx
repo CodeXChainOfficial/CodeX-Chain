@@ -1,22 +1,19 @@
-import styled, { StyledComponent } from "@emotion/styled";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import styled from "@emotion/styled";
 import FormInput from "./components/FormInput";
-import FormTextarea from "./components/FormTextarea";
-import ImageInput from "./components/ImageInput";
-import RadioInput from "./components/RadioInput";
-import ChainSelector from "./components/ChainSelector";
-import { Button, ButtonBaseOwnProps, ButtonOwnProps } from "@mui/material";
-import SelectedChains from "./components/SelectedChains";
-import WalletList from "./components/WalletList";
-import WalletVotingPower from "./components/WalletVotingPower";
-import CreateDAO from "./components/CreateDAO";
-import { useNavigate } from "react-router-dom";
-import React, { Key, useEffect, useState } from "react";
-import { Container, Grid } from '@mui/material';
-import ERC20Item from './card';
+import { Button } from "@mui/material";
+import React, { useState } from "react";
 import { FormInputStyle } from "./styles/form";
-import { CommonProps } from "@mui/material/OverridableComponent";
+import axios from "axios"; // Import Axios for making HTTP requests
+import { Actor, HttpAgent } from "@dfinity/agent";
+import { IIConnection } from "@dfinity/auth-client";
+
+
+const canisterId = "6zqe7-uuaaa-aaaaa-qacia-cai"; // Replace with your actual canister ID
+const endpoint = "http://localhost:8000"; // Replace with your actual endpoint
+const iiConnection = new IIConnection();
+
+const agent = new HttpAgent({ host: endpoint });
+const canister = Actor.createActor(canisterId, tokenInterface, { agent });
 
 
 
@@ -26,7 +23,50 @@ import { CommonProps } from "@mui/material/OverridableComponent";
 export default function ICP20Standard() {
     const [canisterInfo, setCanisterInfo] = useState('');
   
- 
+
+    const authenticateUser = async () => {
+      const user = await iiConnection.authenticate();
+      const userPrincipal = user.getPrincipal().toText();
+      
+      // Now you can use the userPrincipal in your canister interactions
+      console.log("User Principal:", userPrincipal);
+    };
+
+    const user = Actor.createActor(userPrincipal, tokenInterface, { agent });
+    
+
+
+    const tokenInfo = {
+      logo: "your_logo",
+      name: "your_name",
+      symbol: "your_symbol",
+      decimals: "your_decimals",
+      totalSupply: "your_total_supply",
+      owner: "your_owner_principal",
+      fee: "your_fee",
+    };
+    
+    const deployTokenICP = async () => {
+      try {
+        const result = await canister.deployToken(
+          tokenInfo.logo,
+          tokenInfo.name,
+          tokenInfo.symbol,
+          tokenInfo.decimals,
+          tokenInfo.totalSupply,
+          tokenInfo.owner,
+          tokenInfo.fee
+        );
+    
+        console.log("Token deployed successfully:", result);
+      } catch (error) {
+        console.error("Error deploying token:", error);
+      }
+    };
+    
+    // Call the deployToken function when needed
+    
+
   
     const fetchData = () => {
       fetch('http://localhost:5004/api/scriptInfo')
@@ -53,86 +93,77 @@ export default function ICP20Standard() {
     };
     
 
-  const navigate = useNavigate();
 
  
   const [logo, setLogo] = useState("");
   const [name, setName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [decimals, setDecimals] = useState("");
-  const [totalSupply, setTotalSupply] = useState("");
+  const [totalsupply, setTotalSupply] = useState("");
 const fee = '5';
 
   async function deployToken() {
+
+    try {
     const tokenData = {
       logo,
       name,
       symbol,
       decimals,
-      totalSupply,
+      totalsupply,
       fee,
     };
+
+
+
+
+    axios.post('http://localhost:5004/api/createToken', { deployedTokens: [tokenData] })
+    .then(response => {
+      console.log('Token deployment successful');
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
   console.log('TokenData',tokenData);
-    try {
-      const response = await fetch('http://localhost:5004/api/createToken', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        mode: "cors",
-        body: JSON.stringify(tokenData),
-      });
-  
-      if (response.ok) {
-        console.log('Token deployment successful');
-        
-        // Wait for 60 seconds before fetching data
+
         setTimeout(() => {
           fetchData();
         }, 20000); // 60,000 milliseconds = 60 seconds
-      } else {
-        const text = await response.text();
-        console.error('Token deployment failed. Server response:', text);
-      }
-    } catch (error) {
+      } catch (error) {
       console.error('Error while creating a new token', error);
     }
-  }
   
+  
+
+
+  }
   const handleFetchDataClick = () => {
     fetchData(); // Call fetchData when the button is clicked
   };
     
   
- 
+  const handleInputChange = (e, setState) => {
+    setState(e.target.value);
+  };
 
-  
 
   return (
-
-    
-
-
-
 
   <>
         <Section>
         
-
-
           <Title>DIP20 Standard</Title>
-
-
-
 
           <div>
         <Title1>Token Deployment</Title1>
         <Wrapper>
-        <Input type="text" placeholder="Logo URL" value={logo} onChange={(e: { target: { value: any; }; }) => setLogo(e.target.value)} />
-        <Input type="text" placeholder="Name" value={name} onChange={(e: { target: { value: any; }; }) => setName(e.target.value)} />
-        <Input type="text" placeholder="Symbol" value={symbol} onChange={(e: { target: { value: any; }; }) => setSymbol(e.target.value)} />
-        <Input type="number" placeholder="Decimals" value={decimals} onChange={(e: { target: { value: any; }; }) => setDecimals(e.target.value)} />
-        <Input type="number" placeholder="Total Supply" value={totalSupply} onChange={(e: { target: { value: any; }; }) => setTotalSupply(e.target.value)} />
+        <Input type="text" placeholder="Logo" value={logo}   onChange={(e) => handleInputChange(e, setLogo)}/>
+        <Input type="text" placeholder="Name" value={name}   onChange={(e) => handleInputChange(e, setName)}/>
+        <Input type="text" placeholder="symbol" value={symbol}   onChange={(e) => handleInputChange(e, setSymbol)}/>
+        <Input type="number" placeholder="decimals" value={decimals}   onChange={(e) => handleInputChange(e, setDecimals)}/>
+        <Input type="number" placeholder="Total Supply" value={totalsupply}   onChange={(e) => handleInputChange(e, setTotalSupply)}/>
         <Submit onClick={deployToken}>Deploy</Submit></Wrapper>
       </div>
       <div>
@@ -140,15 +171,11 @@ const fee = '5';
       <div dangerouslySetInnerHTML={{ __html: canisterInfo }} />
     </div>  
  
-
-        
         </Section>
-
 
         <Section>
           <Title1>Functionality</Title1>
 
-          <FormInput name="Token Data"  placeholder="Token Info" />
 
         </Section>
       </>

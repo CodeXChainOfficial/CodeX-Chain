@@ -28,7 +28,7 @@
     }
 
   },
-   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],
+   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx", "src/pages/TokenGen/pages/erc20Standard/ICP20Standard.jsx", "node-postbuild.js"],
    "exclude": ["node_modules", "build", "dist"],
 
   "references": [

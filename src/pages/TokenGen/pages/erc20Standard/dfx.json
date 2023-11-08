@@ -2,12 +2,6 @@
   "canisters": {
     "token_33": {
       "main": "src/token.mo"
-    },
-    "token_tst": {
-      "main": "src/token.mo"
-    },
-    "token_ffftst": {
-      "main": "src/token.mo"
     }
   }
 }
